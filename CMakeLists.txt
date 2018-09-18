@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.6)
 
 project(DigitalImageProcessing)
-
+ 
 find_package(OpenCV REQUIRED)
 
 set(PDI_INCLUDE_DIRS
@@ -16,6 +16,9 @@ set(PDI_LIBRARIES
 # The list of examples to be compiled goes here.
 set(PDI_EXAMPLES_SOURCES
     example.cpp
+    negative.cpp
+    troca_regioes.cpp
+    bolhas.cpp
 )
 
 foreach(_source IN ITEMS ${PDI_EXAMPLES_SOURCES})
