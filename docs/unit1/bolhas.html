@@ -136,7 +136,101 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#a3-labeling-objects---bubbles-with-holes" id="a3-labeling-objects---bubbles-with-holes"><h1>3. Labeling objects - Bubbles with holes</h1></a>
+                        <a class="header" href="#exercise-3-labeling-objects" id="exercise-3-labeling-objects"><h1>Exercise 3. Labeling objects</h1></a>
+<a class="header" href="#example-bubbles-with-holes" id="example-bubbles-with-holes"><h3>Example: Bubbles with holes</h3></a>
+<p>In this example, we'll introduce the labeling concept, a method which allow us to identify objects or regions in an image. To create labels, we made use of the <code>floodfill</code> OpenCV method, which consists of painting an area that has the same color, replacing it by another color (label). Here this technique is used for labeling and counting white bubbles in a black background,identifing and counting as well, bubbles with holes.</p>
+<p>This example was based in the <a href="https://agostinhobritojr.github.io/tutorial/pdi/exemplos/labeling.cpp">labeling.cpp</a> algorithm and answers to the proposed exercises at <a href="https://agostinhobritojr.github.io/tutorial/pdi/#_descri%C3%A7%C3%A3o_do_programa_labeling_cpp">agostinhobritojr.github.io</a>.</p>
+<p>The labeling.cpp algorithm works very well in cases where the amount of objects are below 255 units. But, if we have more than 255 objects to label, varying from the pixel grayscale intesity, we'll find an issue. For theses cases, another approach could be used, for instance, a diferent number representation as such as floating point can be used, so a much greater amount of objects could be labeled.</p>
+<p><img src="../img/bolhas.png" alt="labeling" title="Labeling" />
+<img src="../img/labeling_part1.png" alt="labeling" title="Labeling" />
+<img src="../img/labeling_part2.png" alt="labeling" title="Labeling" />
+<img src="../img/labeling.png" alt="labeling" title="Labeling" /></p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;opencv2/opencv.hpp&gt;
+
+using namespace cv;
+
+int main(){
+  Mat image, mask;
+  int width, height;
+  int nobjects, holes, counter;
+
+  // - Reading image --  
+  CvPoint p;
+  image = imread(&quot;img/bolhas.png&quot;,CV_LOAD_IMAGE_GRAYSCALE);
+  
+  if(!image.data){
+    std::cout &lt;&lt; &quot;Couldn't load the file correctly\n&quot;;
+    return(-1);
+  }
+
+  width=image.size().width;
+  height=image.size().height;
+
+  p.x = 0;
+  p.y = 0;
+
+  //  -- Excluding objects that touch the first and last lines --
+  for(int i=0; i&lt;height; i++){
+    if(image.at&lt;uchar&gt;(0, i) == 255){ 
+        floodFill(image,Point(i, 0), 0); 
+    }
+    if(image.at&lt;uchar&gt;(width-1, i) == 255){ 
+        floodFill(image,Point(i, width-1), 0);
+    }
+  } 
+
+  //  -- Excluding objects that touch the first and last columns --
+  for(int i=0; i&lt;width; i++){
+    if(image.at&lt;uchar&gt;(i,0) == 255){ 
+        floodFill(image,Point(0, i), 0);
+    }
+    if(image.at&lt;uchar&gt;(i,height-1) == 255){ 
+        floodFill(image,Point(height-1, i), 0);
+    }
+  }
+
+  //  -- Looking for objects and labeling them --
+  nobjects=0; 
+  for(int i=0; i&lt;height; i++){
+    for(int j=0; j&lt;width; j++){
+      if(image.at&lt;uchar&gt;(i,j) == 255){ 
+        // Found an white object 
+        nobjects++;
+        p.x=j;
+        p.y=i;
+        floodFill(image,p,nobjects);
+      }
+    }
+  }
+
+ //  -- Changing background Color --
+  floodFill(image,Point(0,0),255);
+
+ //  -- Looking for bubbles with holes --
+  holes = 0; counter = 1;
+  for(int i=0; i&lt;height; i++){
+    for(int j=0; j&lt;width; j++){
+      if(image.at&lt;uchar&gt;(i,j) == 0 &amp;&amp; (int)image.at&lt;uchar&gt;(i,j-1)&gt;counter){ //se encontrar um buraco e já não tiver contado a bolha
+        // Found a bubble with a hole 
+        counter++;
+        p.x=j-1;
+        p.y=i;
+        floodFill(image,p,counter);
+      }
+    }
+  }
+
+  std:: cout &lt;&lt; &quot;Number of bubbles: &quot; &lt;&lt;  nobjects &lt;&lt; &quot; and number of bubbles with holes: &quot; &lt;&lt; counter &lt;&lt;std::endl;
+
+  imwrite(&quot;labeling.png&quot;, image);
+  imshow(&quot;janela&quot;, image); 
+  waitKey();
+  return 0;
+} 
+</code></pre>
+<p>As a result of the image processing, the output is:
+<img src="../img/counting.png" alt="labeling" title="Labeling" /></p>
 
                     </main>
 

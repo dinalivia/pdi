@@ -139,6 +139,8 @@
                         <a class="header" href="#exercise-1---negative-of-a-region" id="exercise-1---negative-of-a-region"><h1>Exercise 1 - Negative of a region</h1></a>
 <p>This is the first exercise using OpenCV image manipulation. In this example, we'll be reading and processing a region of a given image in order to create a negative effect on it. To achive this goal, the following fomula is used to invert the color of the pixels: <code>pixel_color = 255 - pixel_color</code>.</p>
 <p>As the image used is in grayscale, we will be aplying it for one channel only. The region is seleted by a couple of for-loops that go through an area within the image, inverting its pixels, as shown below.</p>
+<p><img src="../img/camera__.jpg" alt="Negative Region" title="Negative region" />
+<img src="../img/negative.jpg" alt="Negative Region" title="Negative region" /></p>
 <pre><code class="language-cpp">#include &lt;iostream&gt;
 #include &lt;opencv2/opencv.hpp&gt;
 
@@ -170,8 +172,6 @@ int main()
   return 0;
 }   
 </code></pre>
-<p><img src="../img/camera__.jpg" alt="Negative Region" title="Negative region" />
-<img src="../img/negative.jpg" alt="Negative Region" title="Negative region" /></p>
 
                     </main>
 

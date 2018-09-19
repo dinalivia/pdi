@@ -150,6 +150,8 @@
 <a class="header" href="#exercise-1---negative-of-a-region" id="exercise-1---negative-of-a-region"><h1>Exercise 1 - Negative of a region</h1></a>
 <p>This is the first exercise using OpenCV image manipulation. In this example, we'll be reading and processing a region of a given image in order to create a negative effect on it. To achive this goal, the following fomula is used to invert the color of the pixels: <code>pixel_color = 255 - pixel_color</code>.</p>
 <p>As the image used is in grayscale, we will be aplying it for one channel only. The region is seleted by a couple of for-loops that go through an area within the image, inverting its pixels, as shown below.</p>
+<p><img src="../img/camera__.jpg" alt="Negative Region" title="Negative region" />
+<img src="../img/negative.jpg" alt="Negative Region" title="Negative region" /></p>
 <pre><code class="language-cpp">#include &lt;iostream&gt;
 #include &lt;opencv2/opencv.hpp&gt;
 
@@ -181,10 +183,155 @@ int main()
   return 0;
 }   
 </code></pre>
-<p><img src="../img/camera__.jpg" alt="Negative Region" title="Negative region" />
-<img src="../img/negative.jpg" alt="Negative Region" title="Negative region" /></p>
-<a class="header" href="#a2-swapping-regions" id="a2-swapping-regions"><h1>2. Swapping regions</h1></a>
-<a class="header" href="#a3-labeling-objects---bubbles-with-holes" id="a3-labeling-objects---bubbles-with-holes"><h1>3. Labeling objects - Bubbles with holes</h1></a>
+<a class="header" href="#exercise-2---swapping-regions" id="exercise-2---swapping-regions"><h1>Exercise 2 - Swapping regions</h1></a>
+<p>In this example, we'll create an image by swapping regions from an original one. For this, Regions of Interest (ROI) were created using rectangles with half the height and width of the original image. In sequence, using the <code>Mat (const Mat &amp;m, const Rect &amp;roi)</code> constructor, 4 images were created by using those rectangles and finally the <code>CV::Mat::copyTo(OutPutArray m)</code> method was used to perfom the swap of the 1-3 and 2-4 regions.</p>
+<p><img src="../img/camera__.jpg" alt="Swapping Regions" title="Swapping regions" />
+<img src="../img/swapping.jpg" alt="Swapping Regions" title="Swapping regions" /></p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;opencv2/opencv.hpp&gt;
+
+using namespace cv;
+using namespace std;
+
+int main()
+{
+  Mat image = imread(&quot;img/camera__.jpg&quot;,CV_LOAD_IMAGE_GRAYSCALE);
+ 
+  if(!image.data)
+    cout &lt;&lt; &quot;nao abriu camera__.jpg&quot; &lt;&lt; endl;
+
+  namedWindow(&quot;janela&quot;,WINDOW_AUTOSIZE);
+
+  imshow(&quot;janela&quot;, image);  
+  waitKey();
+
+  int x = 0, y = 0, width = image.rows/2, height = image.cols/2;
+  Mat image2; 
+  image.copyTo(image2);
+
+ // creating Regions of Interest
+  Rect rois[4] = { 
+        Rect(     0,      0, width, height),
+        Rect(width,      0, width, height),
+        Rect(     0, height, width, height),
+        Rect(width, height, width, height)
+        };
+
+  // copying regions and swapping them   
+  Mat region1 (image, rois[3]);
+  region1.copyTo(image2(rois[0]));
+
+  Mat region2 (image, rois[2]);
+  region2.copyTo(image2(rois[1]));
+
+  Mat region3 (image, rois[1]);
+  region3.copyTo(image2(rois[2]));
+
+  Mat region4 (image, rois[0]);
+  region4.copyTo(image2(rois[3]));
+
+  imwrite(&quot;swapping.jpg&quot;, image2);
+  imshow(&quot;janela&quot;, image2);  
+  waitKey();
+
+  return 0;
+}   
+</code></pre>
+<a class="header" href="#exercise-3-labeling-objects" id="exercise-3-labeling-objects"><h1>Exercise 3. Labeling objects</h1></a>
+<a class="header" href="#example-bubbles-with-holes" id="example-bubbles-with-holes"><h3>Example: Bubbles with holes</h3></a>
+<p>In this example, we'll introduce the labeling concept, a method which allow us to identify objects or regions in an image. To create labels, we made use of the <code>floodfill</code> OpenCV method, which consists of painting an area that has the same color, replacing it by another color (label). Here this technique is used for labeling and counting white bubbles in a black background,identifing and counting as well, bubbles with holes.</p>
+<p>This example was based in the <a href="https://agostinhobritojr.github.io/tutorial/pdi/exemplos/labeling.cpp">labeling.cpp</a> algorithm and answers to the proposed exercises at <a href="https://agostinhobritojr.github.io/tutorial/pdi/#_descri%C3%A7%C3%A3o_do_programa_labeling_cpp">agostinhobritojr.github.io</a>.</p>
+<p>The labeling.cpp algorithm works very well in cases where the amount of objects are below 255 units. But, if we have more than 255 objects to label, varying from the pixel grayscale intesity, we'll find an issue. For theses cases, another approach could be used, for instance, a diferent number representation as such as floating point can be used, so a much greater amount of objects could be labeled.</p>
+<p><img src="../img/bolhas.png" alt="labeling" title="Labeling" />
+<img src="../img/labeling_part1.png" alt="labeling" title="Labeling" />
+<img src="../img/labeling_part2.png" alt="labeling" title="Labeling" />
+<img src="../img/labeling.png" alt="labeling" title="Labeling" /></p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;opencv2/opencv.hpp&gt;
+
+using namespace cv;
+
+int main(){
+  Mat image, mask;
+  int width, height;
+  int nobjects, holes, counter;
+
+  // - Reading image --  
+  CvPoint p;
+  image = imread(&quot;img/bolhas.png&quot;,CV_LOAD_IMAGE_GRAYSCALE);
+  
+  if(!image.data){
+    std::cout &lt;&lt; &quot;Couldn't load the file correctly\n&quot;;
+    return(-1);
+  }
+
+  width=image.size().width;
+  height=image.size().height;
+
+  p.x = 0;
+  p.y = 0;
+
+  //  -- Excluding objects that touch the first and last lines --
+  for(int i=0; i&lt;height; i++){
+    if(image.at&lt;uchar&gt;(0, i) == 255){ 
+        floodFill(image,Point(i, 0), 0); 
+    }
+    if(image.at&lt;uchar&gt;(width-1, i) == 255){ 
+        floodFill(image,Point(i, width-1), 0);
+    }
+  } 
+
+  //  -- Excluding objects that touch the first and last columns --
+  for(int i=0; i&lt;width; i++){
+    if(image.at&lt;uchar&gt;(i,0) == 255){ 
+        floodFill(image,Point(0, i), 0);
+    }
+    if(image.at&lt;uchar&gt;(i,height-1) == 255){ 
+        floodFill(image,Point(height-1, i), 0);
+    }
+  }
+
+  //  -- Looking for objects and labeling them --
+  nobjects=0; 
+  for(int i=0; i&lt;height; i++){
+    for(int j=0; j&lt;width; j++){
+      if(image.at&lt;uchar&gt;(i,j) == 255){ 
+        // Found an white object 
+        nobjects++;
+        p.x=j;
+        p.y=i;
+        floodFill(image,p,nobjects);
+      }
+    }
+  }
+
+ //  -- Changing background Color --
+  floodFill(image,Point(0,0),255);
+
+ //  -- Looking for bubbles with holes --
+  holes = 0; counter = 1;
+  for(int i=0; i&lt;height; i++){
+    for(int j=0; j&lt;width; j++){
+      if(image.at&lt;uchar&gt;(i,j) == 0 &amp;&amp; (int)image.at&lt;uchar&gt;(i,j-1)&gt;counter){ //se encontrar um buraco e já não tiver contado a bolha
+        // Found a bubble with a hole 
+        counter++;
+        p.x=j-1;
+        p.y=i;
+        floodFill(image,p,counter);
+      }
+    }
+  }
+
+  std:: cout &lt;&lt; &quot;Number of bubbles: &quot; &lt;&lt;  nobjects &lt;&lt; &quot; and number of bubbles with holes: &quot; &lt;&lt; counter &lt;&lt;std::endl;
+
+  imwrite(&quot;labeling.png&quot;, image);
+  imshow(&quot;janela&quot;, image); 
+  waitKey();
+  return 0;
+} 
+</code></pre>
+<p>As a result of the image processing, the output is:
+<img src="../img/counting.png" alt="labeling" title="Labeling" /></p>
 
                     </main>
 

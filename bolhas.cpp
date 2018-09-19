@@ -65,7 +65,7 @@ int main(){
   for(int i=0; i<height; i++){
     for(int j=0; j<width; j++){
       if(image.at<uchar>(i,j) == 0 && (int)image.at<uchar>(i,j-1)>counter){ //se encontrar um buraco e já não tiver contado a bolha
-  		// Found an bubble with a hole 
+  		// Found a bubble with a hole 
   		counter++;
   		p.x=j-1;
   		p.y=i;
@@ -73,7 +73,6 @@ int main(){
   	  }
   	}
   }
- // floodFill(image,p,0); // se quiser retornar o fundo pra preto
 
   std:: cout << "Number of bubbles: " <<  nobjects << " and number of bubbles with holes: " << counter <<std::endl;
 

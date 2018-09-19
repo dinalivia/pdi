@@ -41,6 +41,7 @@ int main()
   Mat region4 (image, rois[0]);
   region4.copyTo(image2(rois[3]));
 
+  imwrite("swapping.jpg", image2);
   imshow("janela", image2);  
   waitKey();
 

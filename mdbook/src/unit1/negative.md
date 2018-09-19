@@ -4,11 +4,13 @@ This is the first exercise using OpenCV image manipulation. In this example, we'
 
 As the image used is in grayscale, we will be aplying it for one channel only. The region is seleted by a couple of for-loops that go through an area within the image, inverting its pixels, as shown below.
 
+![Negative Region](../img/camera__.jpg "Negative region")
+![Negative Region](../img/negative.jpg "Negative region")
+
+
 ```cpp
 {{ #include ../../../negative.cpp }}
 ```
 
-![Negative Region](../img/camera__.jpg "Negative region")
-![Negative Region](../img/negative.jpg "Negative region")
 
 
