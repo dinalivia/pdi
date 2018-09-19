@@ -3,27 +3,27 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Chapter 1 - PDI</title>
+        <title>2. Swapping regions - Digital Image Processing - Dina Lívia</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         
@@ -32,7 +32,7 @@
     </head>
     <body class="light">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">var path_to_root = "";</script>
+        <script type="text/javascript">var path_to_root = "../";</script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script type="text/javascript">
@@ -72,7 +72,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="chapter_1.html" class="active"><strong aria-hidden="true">1.</strong> Chapter 1</a></li></ol>
+            <ol class="chapter"><li><a href="../introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="../unit1/list.html"><strong aria-hidden="true">2.</strong> Unit 1</a></li><li><ol class="section"><li><a href="../unit1/negative.html"><strong aria-hidden="true">2.1.</strong> Negative of a region</a></li><li><a href="../unit1/swap_regions.html" class="active"><strong aria-hidden="true">2.2.</strong> Swapping regions</a></li><li><a href="../unit1/bolhas.html"><strong aria-hidden="true">2.3.</strong> Labeling objects - Bubbles with holes</a></li></ol></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -102,10 +102,10 @@
                             
                         </div>
 
-                        <h1 class="menu-title">PDI</h1> 
+                        <h1 class="menu-title">Digital Image Processing - Dina Lívia</h1> 
 
                         <div class="right-buttons">
-                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
                                 <i id="print-button" class="fa fa-print"></i>
                             </a>
                         </div>
@@ -136,100 +136,22 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#chapter-1" id="chapter-1"><h1>Chapter 1</h1></a>
-<p><img src="./img/bolhas.png" alt="Test" /></p>
-<pre><code class="language-cpp">#include &lt;iostream&gt;
-#include &lt;opencv2/opencv.hpp&gt;
-
-using namespace cv;
-
-int main(){
-  Mat image, mask;
-  int width, height;
-  int nobjects, holes, counter;
-
-  // - Reading image --  
-  CvPoint p;
-  image = imread(&quot;img/bolhas.png&quot;,CV_LOAD_IMAGE_GRAYSCALE);
-  
-  if(!image.data){
-    std::cout &lt;&lt; &quot;Couldn't load the file correctly\n&quot;;
-    return(-1);
-  }
-
-  width=image.size().width;
-  height=image.size().height;
-
-  p.x = 0;
-  p.y = 0;
-
-  //  -- Excluding objects that touch the first and last lines --
-  for(int i=0; i&lt;height; i++){
-    if(image.at&lt;uchar&gt;(0, i) == 255){ 
-        floodFill(image,Point(i, 0), 0); 
-    }
-    if(image.at&lt;uchar&gt;(width-1, i) == 255){ 
-        floodFill(image,Point(i, width-1), 0);
-    }
-  } 
-
-  //  -- Excluding objects that touch the first and last columns --
-  for(int i=0; i&lt;width; i++){
-    if(image.at&lt;uchar&gt;(i,0) == 255){ 
-        floodFill(image,Point(0, i), 0);
-    }
-    if(image.at&lt;uchar&gt;(i,height-1) == 255){ 
-        floodFill(image,Point(height-1, i), 0);
-    }
-  }
-
-  //  -- Looking for objects and labeling them --
-  nobjects=0; 
-  for(int i=0; i&lt;height; i++){
-    for(int j=0; j&lt;width; j++){
-      if(image.at&lt;uchar&gt;(i,j) == 255){ 
-        // Found an white object 
-        nobjects++;
-        p.x=j;
-        p.y=i;
-        floodFill(image,p,nobjects);
-      }
-    }
-  }
-
- //  -- Changing background Color --
-  floodFill(image,Point(0,0),255);
-
- //  -- Looking for bubbles with holes --
-  holes = 0; counter = 1;
-  for(int i=0; i&lt;height; i++){
-    for(int j=0; j&lt;width; j++){
-      if(image.at&lt;uchar&gt;(i,j) == 0 &amp;&amp; (int)image.at&lt;uchar&gt;(i,j-1)&gt;counter){ //se encontrar um buraco e já não tiver contado a bolha
-        // Found an bubble with a hole 
-        counter++;
-        p.x=j-1;
-        p.y=i;
-        floodFill(image,p,counter);
-      }
-    }
-  }
- // floodFill(image,p,0); // se quiser retornar o fundo pra preto
-
-  std:: cout &lt;&lt; &quot;Number of bubbles: &quot; &lt;&lt;  nobjects &lt;&lt; &quot; and number of bubbles with holes: &quot; &lt;&lt; counter &lt;&lt;std::endl;
-
-  imwrite(&quot;labeling.png&quot;, image);
-  imshow(&quot;janela&quot;, image); 
-  waitKey();
-  return 0;
-} 
-</code></pre>
+                        <a class="header" href="#a2-swapping-regions" id="a2-swapping-regions"><h1>2. Swapping regions</h1></a>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
+                            <a rel="prev" href="../unit1/negative.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
 
+                        
+                            <a rel="next" href="../unit1/bolhas.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -239,7 +161,15 @@ int main(){
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
+                    <a href="../unit1/negative.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
 
+                
+                    <a href="../unit1/bolhas.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
                 
             </nav>
 
@@ -267,14 +197,14 @@ int main(){
         
 
         
-        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
         
 
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
         

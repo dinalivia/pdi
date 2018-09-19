@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>PDI</title>
+        <title>Digital Image Processing - Dina Lívia</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,7 +72,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> Chapter 1</a></li></ol>
+            <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="unit1/list.html"><strong aria-hidden="true">2.</strong> Unit 1</a></li><li><ol class="section"><li><a href="unit1/negative.html"><strong aria-hidden="true">2.1.</strong> Negative of a region</a></li><li><a href="unit1/swap_regions.html"><strong aria-hidden="true">2.2.</strong> Swapping regions</a></li><li><a href="unit1/bolhas.html"><strong aria-hidden="true">2.3.</strong> Labeling objects - Bubbles with holes</a></li></ol></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -102,7 +102,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">PDI</h1> 
+                        <h1 class="menu-title">Digital Image Processing - Dina Lívia</h1> 
 
                         <div class="right-buttons">
                             <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -136,93 +136,55 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#chapter-1" id="chapter-1"><h1>Chapter 1</h1></a>
-<p><img src="./img/bolhas.png" alt="Test" /></p>
+                        <a class="header" href="#introduction" id="introduction"><h1>Introduction</h1></a>
+<a class="header" href="#unit-1" id="unit-1"><h1>Unit 1</h1></a>
+<p>In this unit, the following examples were developed:</p>
+<ul>
+<li>Negative of a region</li>
+<li>Swapping regions</li>
+<li>Counting bubbles with holes</li>
+<li>Histogram equalization</li>
+<li>Motion detection</li>
+<li>Laplacian of Gaussian</li>
+</ul>
+<a class="header" href="#exercise-1---negative-of-a-region" id="exercise-1---negative-of-a-region"><h1>Exercise 1 - Negative of a region</h1></a>
+<p>This is the first exercise using OpenCV image manipulation. In this example, we'll be reading and processing a region of a given image in order to create a negative effect on it. To achive this goal, the following fomula is used to invert the color of the pixels: <code>pixel_color = 255 - pixel_color</code>.</p>
+<p>As the image used is in grayscale, we will be aplying it for one channel only. The region is seleted by a couple of for-loops that go through an area within the image, inverting its pixels, as shown below.</p>
 <pre><code class="language-cpp">#include &lt;iostream&gt;
 #include &lt;opencv2/opencv.hpp&gt;
 
 using namespace cv;
+using namespace std;
 
-int main(){
-  Mat image, mask;
-  int width, height;
-  int nobjects, holes, counter;
+int main()
+{
+  Mat image;
+  int pxl;
 
-  // - Reading image --  
-  CvPoint p;
-  image = imread(&quot;img/bolhas.png&quot;,CV_LOAD_IMAGE_GRAYSCALE);
-  
-  if(!image.data){
-    std::cout &lt;&lt; &quot;Couldn't load the file correctly\n&quot;;
-    return(-1);
-  }
+  image= imread(&quot;img/camera__.jpg&quot;,CV_LOAD_IMAGE_GRAYSCALE);
+  if(!image.data)
+    cout &lt;&lt; &quot;couldn't load image&quot; &lt;&lt; endl;
 
-  width=image.size().width;
-  height=image.size().height;
+  namedWindow(&quot;window&quot;,WINDOW_AUTOSIZE);
 
-  p.x = 0;
-  p.y = 0;
-
-  //  -- Excluding objects that touch the first and last lines --
-  for(int i=0; i&lt;height; i++){
-    if(image.at&lt;uchar&gt;(0, i) == 255){ 
-        floodFill(image,Point(i, 0), 0); 
-    }
-    if(image.at&lt;uchar&gt;(width-1, i) == 255){ 
-        floodFill(image,Point(i, width-1), 0);
-    }
-  } 
-
-  //  -- Excluding objects that touch the first and last columns --
-  for(int i=0; i&lt;width; i++){
-    if(image.at&lt;uchar&gt;(i,0) == 255){ 
-        floodFill(image,Point(0, i), 0);
-    }
-    if(image.at&lt;uchar&gt;(i,height-1) == 255){ 
-        floodFill(image,Point(height-1, i), 0);
+  for(int i=100;i&lt;200;i++){
+    for(int j=100;j&lt;200;j++){
+      pxl = image.at&lt;uchar&gt;(i,j);
+      image.at&lt;uchar&gt;(i,j) = 255 - pxl;
     }
   }
+  imwrite(&quot;negative.jpg&quot;, image);
+  imshow(&quot;window&quot;, image); 
 
-  //  -- Looking for objects and labeling them --
-  nobjects=0; 
-  for(int i=0; i&lt;height; i++){
-    for(int j=0; j&lt;width; j++){
-      if(image.at&lt;uchar&gt;(i,j) == 255){ 
-        // Found an white object 
-        nobjects++;
-        p.x=j;
-        p.y=i;
-        floodFill(image,p,nobjects);
-      }
-    }
-  }
-
- //  -- Changing background Color --
-  floodFill(image,Point(0,0),255);
-
- //  -- Looking for bubbles with holes --
-  holes = 0; counter = 1;
-  for(int i=0; i&lt;height; i++){
-    for(int j=0; j&lt;width; j++){
-      if(image.at&lt;uchar&gt;(i,j) == 0 &amp;&amp; (int)image.at&lt;uchar&gt;(i,j-1)&gt;counter){ //se encontrar um buraco e já não tiver contado a bolha
-        // Found an bubble with a hole 
-        counter++;
-        p.x=j-1;
-        p.y=i;
-        floodFill(image,p,counter);
-      }
-    }
-  }
- // floodFill(image,p,0); // se quiser retornar o fundo pra preto
-
-  std:: cout &lt;&lt; &quot;Number of bubbles: &quot; &lt;&lt;  nobjects &lt;&lt; &quot; and number of bubbles with holes: &quot; &lt;&lt; counter &lt;&lt;std::endl;
-
-  imwrite(&quot;labeling.png&quot;, image);
-  imshow(&quot;janela&quot;, image); 
   waitKey();
+
   return 0;
-} 
+}   
 </code></pre>
+<p><img src="../img/camera__.jpg" alt="Negative Region" title="Negative region" />
+<img src="../img/negative.jpg" alt="Negative Region" title="Negative region" /></p>
+<a class="header" href="#a2-swapping-regions" id="a2-swapping-regions"><h1>2. Swapping regions</h1></a>
+<a class="header" href="#a3-labeling-objects---bubbles-with-holes" id="a3-labeling-objects---bubbles-with-holes"><h1>3. Labeling objects - Bubbles with holes</h1></a>
 
                     </main>
 
