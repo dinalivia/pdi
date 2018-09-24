@@ -72,7 +72,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="unit1/list.html"><strong aria-hidden="true">2.</strong> Unit 1</a></li><li><ol class="section"><li><a href="unit1/negative.html"><strong aria-hidden="true">2.1.</strong> Negative of a region</a></li><li><a href="unit1/swap_regions.html"><strong aria-hidden="true">2.2.</strong> Swapping regions</a></li><li><a href="unit1/bolhas.html"><strong aria-hidden="true">2.3.</strong> Labeling objects - Bubbles with holes</a></li></ol></li></ol>
+            <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="unit1/list.html"><strong aria-hidden="true">2.</strong> Unit 1</a></li><li><ol class="section"><li><a href="unit1/negative.html"><strong aria-hidden="true">2.1.</strong> Negative of a region</a></li><li><a href="unit1/swap_regions.html"><strong aria-hidden="true">2.2.</strong> Swapping regions</a></li><li><a href="unit1/bolhas.html"><strong aria-hidden="true">2.3.</strong> Labeling objects - Bubbles with holes</a></li><li><a href="unit1/equalization.html"><strong aria-hidden="true">2.4.</strong> Histogram equalization</a></li></ol></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -334,6 +334,72 @@ int main(){
 </code></pre>
 <p>As a result of the image processing, the output is:
 <img src="../img/counting.png" alt="labeling" title="Labeling" /></p>
+<a class="header" href="#exercise-4-equalizing-an-image" id="exercise-4-equalizing-an-image"><h1>Exercise 4. Equalizing an image</h1></a>
+<p>An image histogram is a graphical representation of the intensity distribution of an image. It quantifies the number of pixels for each intensity value considered. <a href="https://docs.opencv.org/2.4/doc/tutorials/imgproc/histograms/histogram_equalization/histogram_equalization.html">OpenCV - Histogram equalization</a>
+Histogram equalization is a method that improves the contrast in an image, in order to stretch out the intensity range. In this example, in equalize.cpp this outcome has been achived by using OpenCV function:equalize_hist:equalizeHist &lt;&gt;.</p>
+<p><img src="../img/camera__.jpg" alt="original" title="Original" />
+<img src="../img/equalized_image.jpg" alt="equalized" title="Equalized" /></p>
+<p>This example was based in the <a href="https://agostinhobritojr.github.io/tutorial/pdi/exemplos/histogram.cpp">histogram.cpp</a> algorithm and answers to the proposed exercises at <a href="https://agostinhobritojr.github.io/tutorial/pdi/#_exerc%C3%ADcios_3">agostinhobritojr.github.io</a>.</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;opencv2/opencv.hpp&gt;
+
+using namespace cv;
+using namespace std;
+
+/**  @function main */
+int main( int argc, char** argv )
+{
+  Mat src, dst;
+
+  string source_window = &quot;Source image&quot;;
+  string equalized_window = &quot;Equalized Image&quot;;
+
+  /// Camera 
+  VideoCapture cap;
+
+  //start camera
+  cap.open(0);
+
+  if(!cap.isOpened()){
+    cout &lt;&lt; &quot;Camera not available&quot;;
+    return -1;
+  }
+
+  while(1){
+    /// capture image
+    cap &gt;&gt; src;
+
+    /// Convert to grayscale
+    cvtColor( src, src, CV_BGR2GRAY );
+
+    /// Apply Histogram Equalization
+    equalizeHist( src, dst );
+
+    /// Display results
+    namedWindow( source_window, CV_WINDOW_NORMAL );
+    namedWindow( equalized_window, CV_WINDOW_NORMAL );
+
+    imshow( source_window, src );
+    imshow( equalized_window, dst );
+
+    if(waitKey(30) &gt;= 0) break;
+    }
+
+  // Closes all the windows
+  destroyAllWindows();
+
+  return 0;
+}
+</code></pre>
+<a class="header" href="#what-does-this-program-do" id="what-does-this-program-do"><h3>What does this program do?</h3></a>
+<pre><code>Create a VideoCapture object
+Capture frame-by-frame
+Convert the original image to grayscale
+Equalize the Histogram by using the OpenCV function EqualizeHist
+Display the source and equalized images in a window.
+</code></pre>
+<p>As we can see from the output image, the equalized image has a better distribution of the overall contrast, the furniture behind can be easily observed now. Original image is on the rigth and equalized on the left side
+<img src="../img/equalization.png" alt="equalize" title="Labeling" /></p>
 
                     </main>
 

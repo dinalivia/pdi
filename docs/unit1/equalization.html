@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>2. Swapping regions - Digital Image Processing - Dina Lívia</title>
+        <title>4. Histogram equalization - Digital Image Processing - Dina Lívia</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,7 +72,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="../introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="../unit1/list.html"><strong aria-hidden="true">2.</strong> Unit 1</a></li><li><ol class="section"><li><a href="../unit1/negative.html"><strong aria-hidden="true">2.1.</strong> Negative of a region</a></li><li><a href="../unit1/swap_regions.html" class="active"><strong aria-hidden="true">2.2.</strong> Swapping regions</a></li><li><a href="../unit1/bolhas.html"><strong aria-hidden="true">2.3.</strong> Labeling objects - Bubbles with holes</a></li><li><a href="../unit1/equalization.html"><strong aria-hidden="true">2.4.</strong> Histogram equalization</a></li></ol></li></ol>
+            <ol class="chapter"><li><a href="../introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="../unit1/list.html"><strong aria-hidden="true">2.</strong> Unit 1</a></li><li><ol class="section"><li><a href="../unit1/negative.html"><strong aria-hidden="true">2.1.</strong> Negative of a region</a></li><li><a href="../unit1/swap_regions.html"><strong aria-hidden="true">2.2.</strong> Swapping regions</a></li><li><a href="../unit1/bolhas.html"><strong aria-hidden="true">2.3.</strong> Labeling objects - Bubbles with holes</a></li><li><a href="../unit1/equalization.html" class="active"><strong aria-hidden="true">2.4.</strong> Histogram equalization</a></li></ol></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -136,75 +136,83 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#exercise-2---swapping-regions" id="exercise-2---swapping-regions"><h1>Exercise 2 - Swapping regions</h1></a>
-<p>In this example, we'll create an image by swapping regions from an original one. For this, Regions of Interest (ROI) were created using rectangles with half the height and width of the original image. In sequence, using the <code>Mat (const Mat &amp;m, const Rect &amp;roi)</code> constructor, 4 images were created by using those rectangles and finally the <code>CV::Mat::copyTo(OutPutArray m)</code> method was used to perfom the swap of the 1-3 and 2-4 regions.</p>
-<p><img src="../img/camera__.jpg" alt="Swapping Regions" title="Swapping regions" />
-<img src="../img/swapping.jpg" alt="Swapping Regions" title="Swapping regions" /></p>
+                        <a class="header" href="#exercise-4-equalizing-an-image" id="exercise-4-equalizing-an-image"><h1>Exercise 4. Equalizing an image</h1></a>
+<p>An image histogram is a graphical representation of the intensity distribution of an image. It quantifies the number of pixels for each intensity value considered. <a href="https://docs.opencv.org/2.4/doc/tutorials/imgproc/histograms/histogram_equalization/histogram_equalization.html">OpenCV - Histogram equalization</a>
+Histogram equalization is a method that improves the contrast in an image, in order to stretch out the intensity range. In this example, in equalize.cpp this outcome has been achived by using OpenCV function:equalize_hist:equalizeHist &lt;&gt;.</p>
+<p><img src="../img/camera__.jpg" alt="original" title="Original" />
+<img src="../img/equalized_image.jpg" alt="equalized" title="Equalized" /></p>
+<p>This example was based in the <a href="https://agostinhobritojr.github.io/tutorial/pdi/exemplos/histogram.cpp">histogram.cpp</a> algorithm and answers to the proposed exercises at <a href="https://agostinhobritojr.github.io/tutorial/pdi/#_exerc%C3%ADcios_3">agostinhobritojr.github.io</a>.</p>
 <pre><code class="language-cpp">#include &lt;iostream&gt;
 #include &lt;opencv2/opencv.hpp&gt;
 
 using namespace cv;
 using namespace std;
 
-int main()
+/**  @function main */
+int main( int argc, char** argv )
 {
-  Mat image = imread(&quot;img/camera__.jpg&quot;,CV_LOAD_IMAGE_GRAYSCALE);
- 
-  if(!image.data)
-    cout &lt;&lt; &quot;nao abriu camera__.jpg&quot; &lt;&lt; endl;
+  Mat src, dst;
 
-  namedWindow(&quot;janela&quot;,WINDOW_AUTOSIZE);
+  string source_window = &quot;Source image&quot;;
+  string equalized_window = &quot;Equalized Image&quot;;
 
-  imshow(&quot;janela&quot;, image);  
-  waitKey();
+  /// Camera 
+  VideoCapture cap;
 
-  int x = 0, y = 0, width = image.rows/2, height = image.cols/2;
-  Mat image2; 
-  image.copyTo(image2);
+  //start camera
+  cap.open(0);
 
- // creating Regions of Interest
-  Rect rois[4] = { 
-        Rect(     0,      0, width, height),
-        Rect(width,      0, width, height),
-        Rect(     0, height, width, height),
-        Rect(width, height, width, height)
-        };
+  if(!cap.isOpened()){
+    cout &lt;&lt; &quot;Camera not available&quot;;
+    return -1;
+  }
 
-  // copying regions and swapping them   
-  Mat region1 (image, rois[3]);
-  region1.copyTo(image2(rois[0]));
+  while(1){
+    /// capture image
+    cap &gt;&gt; src;
 
-  Mat region2 (image, rois[2]);
-  region2.copyTo(image2(rois[1]));
+    /// Convert to grayscale
+    cvtColor( src, src, CV_BGR2GRAY );
 
-  Mat region3 (image, rois[1]);
-  region3.copyTo(image2(rois[2]));
+    /// Apply Histogram Equalization
+    equalizeHist( src, dst );
 
-  Mat region4 (image, rois[0]);
-  region4.copyTo(image2(rois[3]));
+    /// Display results
+    namedWindow( source_window, CV_WINDOW_NORMAL );
+    namedWindow( equalized_window, CV_WINDOW_NORMAL );
 
-  imwrite(&quot;swapping.jpg&quot;, image2);
-  imshow(&quot;janela&quot;, image2);  
-  waitKey();
+    imshow( source_window, src );
+    imshow( equalized_window, dst );
+
+    if(waitKey(30) &gt;= 0) break;
+    }
+
+  // Closes all the windows
+  destroyAllWindows();
 
   return 0;
-}   
+}
 </code></pre>
+<a class="header" href="#what-does-this-program-do" id="what-does-this-program-do"><h3>What does this program do?</h3></a>
+<pre><code>Create a VideoCapture object
+Capture frame-by-frame
+Convert the original image to grayscale
+Equalize the Histogram by using the OpenCV function EqualizeHist
+Display the source and equalized images in a window.
+</code></pre>
+<p>As we can see from the output image, the equalized image has a better distribution of the overall contrast, the furniture behind can be easily observed now. Original image is on the rigth and equalized on the left side
+<img src="../img/equalization.png" alt="equalize" title="Labeling" /></p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="../unit1/negative.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../unit1/bolhas.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
-                        
-                            <a rel="next" href="../unit1/bolhas.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -214,15 +222,11 @@ int main()
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="../unit1/negative.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a href="../unit1/bolhas.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
-                
-                    <a href="../unit1/bolhas.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
                 
             </nav>
 

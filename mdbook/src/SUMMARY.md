@@ -5,3 +5,6 @@
     - [1. Negative of a region](./unit1/negative.md)
     - [2. Swapping regions](./unit1/swap_regions.md)
     - [3. Labeling objects - Bubbles with holes](./unit1/bolhas.md)
+    - [4. Histogram equalization](./unit1/equalization.md)
+    - [5. Motion Detector](./unit1/motiondetector.md)
+

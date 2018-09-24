@@ -21,6 +21,7 @@ set(PDI_EXAMPLES_SOURCES
     bolhas.cpp
     histogram.cpp
     equalize.cpp
+    motiondetector.cpp
 )
 
 foreach(_source IN ITEMS ${PDI_EXAMPLES_SOURCES})
