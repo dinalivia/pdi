@@ -19,6 +19,8 @@ set(PDI_EXAMPLES_SOURCES
     negative.cpp
     troca_regioes.cpp
     bolhas.cpp
+    histogram.cpp
+    equalize.cpp
 )
 
 foreach(_source IN ITEMS ${PDI_EXAMPLES_SOURCES})
