@@ -22,6 +22,9 @@ set(PDI_EXAMPLES_SOURCES
     histogram.cpp
     equalize.cpp
     motiondetector.cpp
+    laplgauss.cpp
+    filtroespacial.cpp
+
 )
 
 foreach(_source IN ITEMS ${PDI_EXAMPLES_SOURCES})

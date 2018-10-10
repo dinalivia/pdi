@@ -72,7 +72,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="unit1/list.html"><strong aria-hidden="true">2.</strong> Unit 1</a></li><li><ol class="section"><li><a href="unit1/negative.html"><strong aria-hidden="true">2.1.</strong> Negative of a region</a></li><li><a href="unit1/swap_regions.html"><strong aria-hidden="true">2.2.</strong> Swapping regions</a></li><li><a href="unit1/bolhas.html"><strong aria-hidden="true">2.3.</strong> Labeling objects - Bubbles with holes</a></li><li><a href="unit1/equalization.html"><strong aria-hidden="true">2.4.</strong> Histogram equalization</a></li><li><a href="unit1/motiondetector.html"><strong aria-hidden="true">2.5.</strong> Motion Detector</a></li></ol></li></ol>
+            <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="unit1/list.html"><strong aria-hidden="true">2.</strong> Unit 1</a></li><li><ol class="section"><li><a href="unit1/negative.html"><strong aria-hidden="true">2.1.</strong> Negative of a region</a></li><li><a href="unit1/swap_regions.html"><strong aria-hidden="true">2.2.</strong> Swapping regions</a></li><li><a href="unit1/bolhas.html"><strong aria-hidden="true">2.3.</strong> Labeling objects - Bubbles with holes</a></li><li><a href="unit1/equalization.html"><strong aria-hidden="true">2.4.</strong> Histogram equalization</a></li><li><a href="unit1/motiondetector.html"><strong aria-hidden="true">2.5.</strong> Motion Detector</a></li><li><a href="unit1/lapl_gauss.html"><strong aria-hidden="true">2.6.</strong> Laplacian of a Gaussian filter</a></li></ol></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -503,7 +503,143 @@ int main(int argc, char** argv){
   }
   return 0;
 }
+</code></pre>
+<a class="header" href="#exercise-6-laplacian-of-gaussian" id="exercise-6-laplacian-of-gaussian"><h1>Exercise 6. Laplacian of Gaussian</h1></a>
+<p>This example was based in the <a href="https://agostinhobritojr.github.io/tutorial/pdi/exemplos/filtroespacial.cpp">filtroespacial.cpp</a> algorithm and answers to the proposed exercises at <a href="https://agostinhobritojr.github.io/tutorial/pdi/#_exerc%C3%ADcios_4">agostinhobritojr.github.io</a>.</p>
+<p>This program adds one more function to the provided example. Through this new function, the laplacian of the gaussian of a captured image can be calculated by pressing the key &quot;z&quot; and the filtered image is displayed.</p>
+<p>Comparing both laplacian and laplacion of gauss filters results, it is possible to conclude that the second filter returns a better filtering, as we can observe more easily the borders and cornes of the image.</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;opencv2/opencv.hpp&gt;
 
+using namespace cv;
+using namespace std;
+
+void printmask(Mat &amp;m){
+  for(int i=0; i&lt;m.size().height; i++){
+    for(int j=0; j&lt;m.size().width; j++){
+      cout &lt;&lt; m.at&lt;float&gt;(i,j) &lt;&lt; &quot;,&quot;;
+    }
+    cout &lt;&lt; endl;
+  }
+}
+
+void menu(){
+  cout &lt;&lt; &quot;\npressione a tecla para ativar o filtro: \n&quot;
+    &quot;a - calcular modulo\n&quot;
+    &quot;m - media\n&quot;
+    &quot;g - gauss\n&quot;
+    &quot;v - vertical\n&quot;
+    &quot;h - horizontal\n&quot;
+    &quot;l - laplaciano\n&quot;
+    &quot;z - laplaciano do gaussiano\n&quot;
+    &quot;esc - sair\n&quot;;
+}
+
+int main(int argvc, char** argv){
+  VideoCapture video;
+  float media[] = {1,1,1,
+                   1,1,1,
+                   1,1,1};
+  float gauss[] = {1,2,1,
+                   2,4,2,
+                   1,2,1};
+  float horizontal[]={-1,0,1,
+                      -2,0,2,
+                      -1,0,1};
+  float vertical[]={-1,-2,-1,
+                    0,0,0,
+                    1,2,1};
+  float laplacian[]={0,-1,0,
+                     -1,4,-1,
+                     0,-1,0};
+  float lapgauss[]={0,0,1,0,0,
+                    0,1,2,1,0,
+                    1,2,-16,2,1,
+                    0,1,2,1,0,
+                    0,0,1,0,0};
+
+
+  Mat cap, frame, frame32f, frameFiltered;
+  Mat mask(3,3,CV_32F), mask1;
+  Mat result, result1;
+  double width, height, min, max;
+  int absolut;
+  char key;
+
+  video.open(0);
+  if(!video.isOpened())
+    return -1;
+  width=video.get(CV_CAP_PROP_FRAME_WIDTH);
+  height=video.get(CV_CAP_PROP_FRAME_HEIGHT);
+  std::cout &lt;&lt; &quot;largura=&quot; &lt;&lt; width &lt;&lt; &quot;\n&quot;;;
+  std::cout &lt;&lt; &quot;altura =&quot; &lt;&lt; height&lt;&lt; &quot;\n&quot;;;
+
+  namedWindow(&quot;filtroespacial&quot;,1);
+
+  mask = Mat(3, 3, CV_32F, media);
+  scaleAdd(mask, 1/9.0, Mat::zeros(3,3,CV_32F), mask1);
+  swap(mask, mask1);
+  absolut=1; // calcs abs of the image
+
+  menu();
+  for(;;){
+    video &gt;&gt; cap;
+    cvtColor(cap, frame, CV_BGR2GRAY);
+    flip(frame, frame, 1);
+    imshow(&quot;original&quot;, frame);
+    frame.convertTo(frame32f, CV_32F);
+    filter2D(frame32f, frameFiltered, frame32f.depth(), mask, Point(1,1), 0);
+    if(absolut){
+      frameFiltered=abs(frameFiltered);
+    }
+    frameFiltered.convertTo(result, CV_8U);
+    imshow(&quot;filtroespacial&quot;, result);
+    key = (char) waitKey(10);
+    if( key == 27 ) break; // esc pressed!
+    switch(key){
+    case 'a':
+      menu();
+      absolut=!absolut;
+      break;
+    case 'm':
+      menu();
+      mask = Mat(3, 3, CV_32F, media);
+      scaleAdd(mask, 1/9.0, Mat::zeros(3,3,CV_32F), mask1);
+      mask = mask1;
+      printmask(mask);
+      break;
+    case 'g':
+      menu();
+      mask = Mat(3, 3, CV_32F, gauss);
+      scaleAdd(mask, 1/16.0, Mat::zeros(3,3,CV_32F), mask1);
+      mask = mask1;
+      printmask(mask);
+      break;
+    case 'h':
+      menu();
+      mask = Mat(3, 3, CV_32F, horizontal);
+      printmask(mask);
+      break;
+    case 'v':
+      menu();
+      mask = Mat(3, 3, CV_32F, vertical);
+      printmask(mask);
+      break;
+    case 'l':
+      menu();
+      mask = Mat(3, 3, CV_32F, laplacian);
+      printmask(mask);
+      break;
+    case 'z':
+      menu();
+      mask = Mat(5, 5, CV_32F, lapgauss);
+      printmask(mask);
+    default:
+      break;
+    }
+  }
+  return 0;
+}
 </code></pre>
 
                     </main>
