@@ -10,7 +10,9 @@ This program adds three more functions to the provided example. Through these fu
 ```cpp
 {{ #include ../../../tiltyshift.cpp }}
 ```
-Filtered image
-![Filtered image](../img/tiltyshift.jpg "Filtered")
+
 Original image
 ![Original image](../img/original.jpg "Original")
+
+Filtered image
+![Filtered image](../img/tiltyshift.jpg "Filtered")
