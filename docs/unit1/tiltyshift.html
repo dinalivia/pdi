@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>1. Negative of a region - Digital Image Processing - Dina Lívia</title>
+        <title>7. Tilty Shift - Digital Image Processing - Dina Lívia</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,7 +72,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="../introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="../unit1/list.html"><strong aria-hidden="true">2.</strong> Unit 1</a></li><li><ol class="section"><li><a href="../unit1/negative.html" class="active"><strong aria-hidden="true">2.1.</strong> Negative of a region</a></li><li><a href="../unit1/swap_regions.html"><strong aria-hidden="true">2.2.</strong> Swapping regions</a></li><li><a href="../unit1/bolhas.html"><strong aria-hidden="true">2.3.</strong> Labeling objects - Bubbles with holes</a></li><li><a href="../unit1/equalization.html"><strong aria-hidden="true">2.4.</strong> Histogram equalization</a></li><li><a href="../unit1/motiondetector.html"><strong aria-hidden="true">2.5.</strong> Motion Detector</a></li><li><a href="../unit1/lapl_gauss.html"><strong aria-hidden="true">2.6.</strong> Laplacian of a Gaussian filter</a></li><li><a href="../unit1/tiltyshift.html"><strong aria-hidden="true">2.7.</strong> Tilty Shift</a></li></ol></li></ol>
+            <ol class="chapter"><li><a href="../introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="../unit1/list.html"><strong aria-hidden="true">2.</strong> Unit 1</a></li><li><ol class="section"><li><a href="../unit1/negative.html"><strong aria-hidden="true">2.1.</strong> Negative of a region</a></li><li><a href="../unit1/swap_regions.html"><strong aria-hidden="true">2.2.</strong> Swapping regions</a></li><li><a href="../unit1/bolhas.html"><strong aria-hidden="true">2.3.</strong> Labeling objects - Bubbles with holes</a></li><li><a href="../unit1/equalization.html"><strong aria-hidden="true">2.4.</strong> Histogram equalization</a></li><li><a href="../unit1/motiondetector.html"><strong aria-hidden="true">2.5.</strong> Motion Detector</a></li><li><a href="../unit1/lapl_gauss.html"><strong aria-hidden="true">2.6.</strong> Laplacian of a Gaussian filter</a></li><li><a href="../unit1/tiltyshift.html" class="active"><strong aria-hidden="true">2.7.</strong> Tilty Shift</a></li></ol></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -136,41 +136,15 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#exercise-1---negative-of-a-region" id="exercise-1---negative-of-a-region"><h1>Exercise 1 - Negative of a region</h1></a>
-<p>This is the first exercise using OpenCV image manipulation. In this example, we'll be reading and processing a region of a given image in order to create a negative effect on it. To achive this goal, the following fomula is used to invert the color of the pixels: <code>pixel_color = 255 - pixel_color</code>.</p>
-<p>As the image used is in grayscale, we will be aplying it for one channel only. The region is seleted by a couple of for-loops that go through an area within the image, inverting its pixels, as shown below.</p>
-<p><img src="../img/camera__.jpg" alt="Negative Region" title="Negative region" />
-<img src="../img/negative.jpg" alt="Negative Region" title="Negative region" /></p>
-<pre><code class="language-cpp">#include &lt;iostream&gt;
-#include &lt;opencv2/opencv.hpp&gt;
-
-using namespace cv;
-using namespace std;
-
-int main()
-{
-  Mat image;
-  int pxl;
-
-  image= imread(&quot;img/camera__.jpg&quot;,CV_LOAD_IMAGE_GRAYSCALE);
-  if(!image.data)
-    cout &lt;&lt; &quot;couldn't load image&quot; &lt;&lt; endl;
-
-  namedWindow(&quot;window&quot;,WINDOW_AUTOSIZE);
-
-  for(int i=100;i&lt;200;i++){
-    for(int j=100;j&lt;200;j++){
-      pxl = image.at&lt;uchar&gt;(i,j);
-      image.at&lt;uchar&gt;(i,j) = 255 - pxl;
-    }
-  }
-  imwrite(&quot;negative.jpg&quot;, image);
-  imshow(&quot;window&quot;, image); 
-
-  waitKey();
-
-  return 0;
-}   
+                        <a class="header" href="#exercise-7-tilty-shift" id="exercise-7-tilty-shift"><h1>Exercise 7. Tilty Shift</h1></a>
+<p>This example was based in the <a href="https://agostinhobritojr.github.io/tutorial/pdi/exemplos/filtroespacial.cpp">addweighted.cpp</a> algorithm and answers to the proposed exercises at <a href="https://agostinhobritojr.github.io/tutorial/pdi/#_exerc%C3%ADcios_6">agostinhobritojr.github.io</a>.</p>
+<p>This program adds three more functions to the provided example. Through these functions, the tiltyshift.cpp program makes the following adjustments:</p>
+<ol>
+<li>Adjust the height of the focus centre of the image</li>
+<li>Adjust the decay of the blurred area</li>
+<li>Adjust the vertical position of the focus centre area of the filtered image</li>
+</ol>
+<pre><code class="language-cpp">{{ #include ../../../tiltyshift.cpp }}
 </code></pre>
 
                     </main>
@@ -178,15 +152,11 @@ int main()
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="../unit1/list.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../unit1/lapl_gauss.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
-                        
-                            <a rel="next" href="../unit1/swap_regions.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -196,15 +166,11 @@ int main()
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="../unit1/list.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a href="../unit1/lapl_gauss.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
-                
-                    <a href="../unit1/swap_regions.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
                 
             </nav>
 
