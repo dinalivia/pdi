@@ -13,4 +13,4 @@ This program adds three more functions to the provided example. Through these fu
 Filtered image
 ![Filtered image](../img/tiltyshift.jpg "Filtered")
 Original image
-![Original image](../img/sydney7.jpg "Original")
+![Original image](../img/original.jpg "Original")
