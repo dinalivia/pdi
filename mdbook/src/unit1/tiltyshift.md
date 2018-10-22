@@ -7,6 +7,9 @@ This program adds three more functions to the provided example. Through these fu
 2. Adjust the decay of the blurred area
 3. Adjust the vertical position of the focus centre area of the filtered image
 
+![Original image](../img/sydney7.jpg "Original")
+![Filtered image](../img/tiltyshift.jpg "Filtered")
+
 ```cpp
 {{ #include ../../../tiltyshift.cpp }}
 ```
