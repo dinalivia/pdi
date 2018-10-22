@@ -7,10 +7,10 @@ using namespace std;
 
 double alfa;
 
-// POSICAO
+
 int center_slider=0;
 int center_slider_max=100;
-// DECAIMENTO
+
 int alfa_slider = 0;
 int alfa_slider_max = 100;
 // ALTURA
@@ -62,14 +62,13 @@ int main(int argvc, char** argv){
   namedWindow("addweighted", 1);
   image2.convertTo(image2,CV_32F);
 
-  //filtro media--------------------------------------------
+  
   float media[]={1,1,1,
                1,1,1,
                1,1,1};
   Mat mascara;
   mascara = Mat(3,3,CV_32F,media);
   scaleAdd(mascara, 1/9.0, Mat::zeros(3,3,CV_32F), mascara);
-  //--------------------------------------------------------
 
   for (int i = 0; i < 7; i++) {
         filter2D(image2, image2, image2.depth(), mascara, Point(1,1), 0);
@@ -98,6 +97,9 @@ int main(int argvc, char** argv){
   on_trackbar_line(center_slider, 0 );
 
   waitKey(0);
-  imwrite("tiltshift.png", blended);
+  imwrite("tiltyshift.jpg", blended);
+  imshow("window",blended);
+  imwrite("original.jpg", image1);
+  imshow("window2",image1);
   return 0;
 }

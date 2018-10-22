@@ -24,7 +24,7 @@ set(PDI_EXAMPLES_SOURCES
     motiondetector.cpp
     laplgauss.cpp
     filtroespacial.cpp
-    tiltshift.cpp
+    tiltyshift.cpp
     addweighted.cpp
 
 )

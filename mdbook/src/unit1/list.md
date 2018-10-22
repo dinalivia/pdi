@@ -7,3 +7,4 @@ In this unit, the following examples were developed:
 - Histogram equalization
 - Motion detection
 - Laplacian of Gaussian
+- Tilty Shift
