@@ -9,6 +9,10 @@
     - [5. Motion Detector](./unit1/motiondetector.md)
     - [6. Laplacian of a Gaussian filter](./unit1/lapl_gauss.md)
     - [7. Tilty Shift](./unit1/tiltyshift.md)
+- [Unit 2](./unit2/list.md)
+    - [1. Homomorphic Filter](./unit2/homomorphic.md)
+    - [2. Pointillism art](./unit1/swap_regions.md)
+    - [3. The K-means process](./unit1/swap_regions.md)
 
 
 

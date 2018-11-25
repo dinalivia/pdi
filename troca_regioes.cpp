@@ -7,13 +7,13 @@ using namespace std;
 int main()
 {
   Mat image = imread("img/camera__.jpg",CV_LOAD_IMAGE_GRAYSCALE);
- 
+
   if(!image.data)
     cout << "nao abriu camera__.jpg" << endl;
 
   namedWindow("janela",WINDOW_AUTOSIZE);
 
-  imshow("janela", image);  
+  imshow("janela", image);      
   waitKey();
 
   int x = 0, y = 0, width = image.rows/2, height = image.cols/2;

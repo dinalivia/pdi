@@ -17,7 +17,7 @@ Calculates a histogram of a set of arrays:
 OpenCV implements the function compareHist to perform a comparison. It also offers 4 different metrics to compute the matching, in this program we used the correlation as an metric.
 `compareHist(histR, old_hist, CV_COMP_CORREL);`
 
-This example was based in the [histogram.cpp](https://agostinhobritojr.github.io/tutorial/pdi/exemplos/histogram.cpp) algorithm and answers to the proposed exercises at [agostinhobritojr.github.io](https://agostinhobritojr.github.io/tutorial/pdi/#_exerc%C3%ADcios_3).
+This example was based on the [histogram.cpp](https://agostinhobritojr.github.io/tutorial/pdi/exemplos/histogram.cpp) algorithm and answers to the proposed exercises at [agostinhobritojr.github.io](https://agostinhobritojr.github.io/tutorial/pdi/#_exerc%C3%ADcios_3).
 
 ```cpp
 {{ #include ../../../motiondetector.cpp }}

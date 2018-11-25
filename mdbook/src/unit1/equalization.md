@@ -6,7 +6,7 @@ Histogram equalization is a method that improves the contrast in an image, in or
 ![original](../img/camera__.jpg "Original")
 ![equalized](../img/equalized_image.jpg "Equalized")
 
-This example was based in the [histogram.cpp](https://agostinhobritojr.github.io/tutorial/pdi/exemplos/histogram.cpp) algorithm and answers to the proposed exercises at [agostinhobritojr.github.io](https://agostinhobritojr.github.io/tutorial/pdi/#_exerc%C3%ADcios_3).
+This example was based on the [histogram.cpp](https://agostinhobritojr.github.io/tutorial/pdi/exemplos/histogram.cpp) algorithm and answers to the proposed exercises at [agostinhobritojr.github.io](https://agostinhobritojr.github.io/tutorial/pdi/#_exerc%C3%ADcios_3).
 
 ```cpp
 {{ #include ../../../equalize.cpp }}

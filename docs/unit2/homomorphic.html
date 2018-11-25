@@ -1,0 +1,414 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>1. Homomorphic Filter - Digital Image Processing - Dina Lívia</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">var path_to_root = "../";</script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li><a href="../introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="../unit1/list.html"><strong aria-hidden="true">2.</strong> Unit 1</a></li><li><ol class="section"><li><a href="../unit1/negative.html"><strong aria-hidden="true">2.1.</strong> Negative of a region</a></li><li><a href="../unit1/swap_regions.html"><strong aria-hidden="true">2.2.</strong> Swapping regions</a></li><li><a href="../unit1/bolhas.html"><strong aria-hidden="true">2.3.</strong> Labeling objects - Bubbles with holes</a></li><li><a href="../unit1/equalization.html"><strong aria-hidden="true">2.4.</strong> Histogram equalization</a></li><li><a href="../unit1/motiondetector.html"><strong aria-hidden="true">2.5.</strong> Motion Detector</a></li><li><a href="../unit1/lapl_gauss.html"><strong aria-hidden="true">2.6.</strong> Laplacian of a Gaussian filter</a></li><li><a href="../unit1/tiltyshift.html"><strong aria-hidden="true">2.7.</strong> Tilty Shift</a></li></ol></li><li><a href="../unit2/list.html"><strong aria-hidden="true">3.</strong> Unit 2</a></li><li><ol class="section"><li><a href="../unit2/homomorphic.html" class="active"><strong aria-hidden="true">3.1.</strong> Homomorphic Filter</a></li><li><a href="../unit1/swap_regions.html"><strong aria-hidden="true">3.2.</strong> Pointillism art</a></li><li><a href="../unit1/swap_regions.html"><strong aria-hidden="true">3.3.</strong> The K-means process</a></li></ol></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Digital Image Processing - Dina Lívia</h1> 
+
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#exercise-1-homomorphic-filter" id="exercise-1-homomorphic-filter"><h1>Exercise 1. Homomorphic filter</h1></a>
+<p>This example implements an homomorphic filter based on the <a href="https://agostinhobritojr.github.io/tutorial/pdi/exemplos/dft.cpp">dft.cpp</a> algorithm and answers to the proposed exercises at <a href="https://agostinhobritojr.github.io/tutorial/pdi/#_exerc%C3%ADcios_6">agostinhobritojr.github.io</a>.</p>
+<p>The Homomorphic filter is based on the following function:</p>
+<p><img src="../img/equation_homomorphic.png" alt="Equation" title="Equation" /></p>
+<a class="header" href="#what-does-this-program-do" id="what-does-this-program-do"><h2>What does this program do?</h2></a>
+<a class="header" href="#the-program-allows-4-different-adjustments-in-the-image" id="the-program-allows-4-different-adjustments-in-the-image"><h4>The program allows 4 different adjustments in the image</h4></a>
+<ol>
+<li>Regulate the low frequency component γLγL (referring to illumination);</li>
+<li>Regulate the high frequency component γHγH (referring to reflectance);</li>
+<li>Regulate the variable C, which controls the slope of the function as it transitions between γLγL and γHγH.</li>
+<li>Adjust the variable D0D0;</li>
+</ol>
+<p>Original image
+<img src="../img/original_homomorphic.png" alt="Original image" title="Original" /></p>
+<p>Filtered image
+<img src="../img/filtered_homomorphic.png" alt="Filtered image" title="Filtered" /></p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;opencv2/opencv.hpp&gt;
+#include &lt;cmath&gt;
+
+using namespace cv;
+using namespace std;
+
+Mat image, imageDft, padded;
+char *filename;
+float MAX = 100.0;
+//-----------------VARIAVEIS DO FILTRO---------------------
+float yl = 0, yh = 0, d0 = 0, c = 0;
+float ylmax = 100, yhmax = 100, d0max = 256, cmax = 100;
+int yl_slider = 0, yh_slider = 0, d0_slider = 0, c_slider = 0;
+//---------------------------------------------------------
+
+//valores ideais dos tamanhos da imagem para calculo da DFT
+int dft_M, dft_N;
+//---------------------------------------------------------
+
+char TrackbarName[50];
+
+void deslocaDFT(Mat&amp; image ){
+    Mat tmp, A, B, C, D;
+
+    // se a imagem tiver tamanho impar, recorta a regiao para
+    // evitar cÃģpias de tamanho desigual
+    image = image(Rect(0, 0, image.cols &amp; -2, image.rows &amp; -2));
+    int cx = image.cols/2;
+    int cy = image.rows/2;
+
+    // reorganize quadrants
+    // A B   -&gt;  D C
+    // C D       B A
+    A = image(Rect(0, 0, cx, cy));
+    B = image(Rect(cx, 0, cx, cy));
+    C = image(Rect(0, cy, cx, cy));
+    D = image(Rect(cx, cy, cx, cy));
+
+    // A &lt;-&gt; D
+    A.copyTo(tmp);  D.copyTo(A);  tmp.copyTo(D);
+
+    // C &lt;-&gt; B
+    C.copyTo(tmp);  B.copyTo(C);  tmp.copyTo(B);
+}
+
+void filtroHM(){
+  Mat filter = Mat(padded.size(), CV_32FC2, Scalar(0));
+  Mat tmp = Mat(dft_M, dft_N, CV_32F);
+
+  for (int i = 0; i &lt; dft_M; i++) {
+      for (int j = 0; j &lt; dft_N; j++) {
+          float d2 = pow(i - dft_M/2.0, 2) + pow(j - dft_N/2.0, 2);
+          float exp = - c*(d2/pow(d0, 2));
+          float filtroH = (yh - yl)*(1 - expf(exp) ) + yl;
+          tmp.at&lt;float&gt; (i,j) = filtroH;
+      }
+  }
+
+  Mat comps[] = {tmp, tmp};
+  merge(comps, 2, filter);
+
+  Mat dftClone = imageDft.clone();
+
+  mulSpectrums(dftClone,filter,dftClone,0);
+
+  deslocaDFT(dftClone);
+
+  idft(dftClone, dftClone);
+
+  vector&lt;Mat&gt; planos;
+
+  split (dftClone, planos);
+
+  normalize(planos[0], planos[0], 0, 1, CV_MINMAX);
+
+  imshow(&quot;Filtro Homomorfico&quot;, planos[0]);
+  imshow(&quot;Original&quot;, image);
+
+}
+
+void on_trackbar_yl(int, void*){
+    yl = (float) yl_slider;
+    yl = ylmax*yl/MAX;
+    filtroHM();
+}
+
+void on_trackbar_d0(int, void*){
+    d0 = d0_slider*d0max/MAX;
+    filtroHM();
+}
+
+void on_trackbar_yh(int, void*) {
+    yh = yh_slider*yhmax/MAX;
+    filtroHM();
+}
+void on_trackbar_c(int, void*) {
+    c = c_slider*cmax / MAX;
+    filtroHM();
+}
+
+
+int main(int argvc , char** argv){
+  //open image
+      if (argvc != 2) {
+        cerr &lt;&lt; &quot;Usage: &quot; &lt;&lt; argv[0] &lt;&lt; &quot; &lt;img_path&gt;&quot; &lt;&lt; endl;
+        return 1;
+    }
+
+    filename = argv[1];
+    image = imread(filename);
+  cvtColor(image, image, CV_BGR2GRAY);
+  // Identify the optimum size for 
+  // Calculating FFT
+  dft_M = getOptimalDFTSize(image.rows);
+  dft_N = getOptimalDFTSize(image.cols);
+
+
+
+  // Image padding
+  Mat_&lt;float&gt; zeros;
+  copyMakeBorder(image, padded, 0,
+                 dft_M - image.rows, 0,
+                 dft_N - image.cols,
+                 BORDER_CONSTANT, Scalar::all(0));
+
+  // Zero padding - complex part of the matrix
+  zeros = Mat_&lt;float&gt;::zeros(padded.size());
+
+  // prepare the complex part 
+  imageDft = Mat(padded.size(), CV_32FC2, Scalar(0));
+
+  copyMakeBorder(image, padded, 0,
+                 dft_M - image.rows, 0,
+                 dft_N - image.cols,
+                 BORDER_CONSTANT, Scalar::all(0));
+
+  Mat_&lt;float&gt; realInput = Mat_&lt;float&gt;(padded);
+
+  // insere the two components within the matrices arrays
+  vector&lt;Mat&gt; planos;
+  planos.push_back(realInput);
+  planos.push_back(zeros);
+
+  // combine matrices array into a single
+  // complex component
+  merge(planos, imageDft);
+
+  // calcula o dft
+  dft(imageDft, imageDft);
+  deslocaDFT(imageDft);
+
+  namedWindow(&quot;Homomorfic filter&quot;, WINDOW_NORMAL);
+
+  sprintf( TrackbarName, &quot;Yh&quot;);
+  createTrackbar( TrackbarName, &quot;Filtro Homomorfico&quot;,
+                  &amp;yh_slider,
+                  MAX,
+                  on_trackbar_yh);
+
+  sprintf( TrackbarName, &quot;YL&quot;);
+  createTrackbar( TrackbarName, &quot;Filtro Homomorfico&quot;,
+                  &amp;yl_slider,
+                  MAX,
+                  on_trackbar_yl);
+
+  sprintf( TrackbarName, &quot;D0&quot;);
+  createTrackbar( TrackbarName, &quot;Filtro Homomorfico&quot;,
+                  &amp;d0_slider,
+                  MAX,
+                  on_trackbar_d0 );
+  sprintf(TrackbarName, &quot;C&quot;);
+  createTrackbar( TrackbarName, &quot;Filtro Homomorfico&quot;,
+                  &amp;c_slider,
+                  MAX,
+                  on_trackbar_c);
+  filtroHM();
+  waitKey(0);
+
+  return 0;
+}
+ 
+</code></pre>
+<p>git</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../unit2/list.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../unit1/swap_regions.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../unit2/list.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../unit1/swap_regions.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3001");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload(true); // force reload from server (not from cache)
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        
+
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

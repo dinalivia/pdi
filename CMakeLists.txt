@@ -26,6 +26,11 @@ set(PDI_EXAMPLES_SOURCES
     filtroespacial.cpp
     tiltyshift.cpp
     addweighted.cpp
+    tiltyshiftvideo.cpp
+    dft.cpp
+    homomorphic.cpp
+    autocorrection.cpp
+    gabarito.cpp
 
 )
 

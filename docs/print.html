@@ -72,7 +72,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="unit1/list.html"><strong aria-hidden="true">2.</strong> Unit 1</a></li><li><ol class="section"><li><a href="unit1/negative.html"><strong aria-hidden="true">2.1.</strong> Negative of a region</a></li><li><a href="unit1/swap_regions.html"><strong aria-hidden="true">2.2.</strong> Swapping regions</a></li><li><a href="unit1/bolhas.html"><strong aria-hidden="true">2.3.</strong> Labeling objects - Bubbles with holes</a></li><li><a href="unit1/equalization.html"><strong aria-hidden="true">2.4.</strong> Histogram equalization</a></li><li><a href="unit1/motiondetector.html"><strong aria-hidden="true">2.5.</strong> Motion Detector</a></li><li><a href="unit1/lapl_gauss.html"><strong aria-hidden="true">2.6.</strong> Laplacian of a Gaussian filter</a></li><li><a href="unit1/tiltyshift.html"><strong aria-hidden="true">2.7.</strong> Tilty Shift</a></li></ol></li></ol>
+            <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="unit1/list.html"><strong aria-hidden="true">2.</strong> Unit 1</a></li><li><ol class="section"><li><a href="unit1/negative.html"><strong aria-hidden="true">2.1.</strong> Negative of a region</a></li><li><a href="unit1/swap_regions.html"><strong aria-hidden="true">2.2.</strong> Swapping regions</a></li><li><a href="unit1/bolhas.html"><strong aria-hidden="true">2.3.</strong> Labeling objects - Bubbles with holes</a></li><li><a href="unit1/equalization.html"><strong aria-hidden="true">2.4.</strong> Histogram equalization</a></li><li><a href="unit1/motiondetector.html"><strong aria-hidden="true">2.5.</strong> Motion Detector</a></li><li><a href="unit1/lapl_gauss.html"><strong aria-hidden="true">2.6.</strong> Laplacian of a Gaussian filter</a></li><li><a href="unit1/tiltyshift.html"><strong aria-hidden="true">2.7.</strong> Tilty Shift</a></li></ol></li><li><a href="unit2/list.html"><strong aria-hidden="true">3.</strong> Unit 2</a></li><li><ol class="section"><li><a href="unit2/homomorphic.html"><strong aria-hidden="true">3.1.</strong> Homomorphic Filter</a></li><li><a href="unit1/swap_regions.html"><strong aria-hidden="true">3.2.</strong> Pointillism art</a></li><li><a href="unit1/swap_regions.html"><strong aria-hidden="true">3.3.</strong> The K-means process</a></li></ol></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -199,13 +199,13 @@ using namespace std;
 int main()
 {
   Mat image = imread(&quot;img/camera__.jpg&quot;,CV_LOAD_IMAGE_GRAYSCALE);
- 
+
   if(!image.data)
     cout &lt;&lt; &quot;nao abriu camera__.jpg&quot; &lt;&lt; endl;
 
   namedWindow(&quot;janela&quot;,WINDOW_AUTOSIZE);
 
-  imshow(&quot;janela&quot;, image);  
+  imshow(&quot;janela&quot;, image);      
   waitKey();
 
   int x = 0, y = 0, width = image.rows/2, height = image.cols/2;
@@ -243,7 +243,7 @@ int main()
 <a class="header" href="#exercise-3-labeling-objects" id="exercise-3-labeling-objects"><h1>Exercise 3. Labeling objects</h1></a>
 <a class="header" href="#example-bubbles-with-holes" id="example-bubbles-with-holes"><h3>Example: Bubbles with holes</h3></a>
 <p>In this example, we'll introduce the labeling concept, a method which allow us to identify objects or regions in an image. To create labels, we made use of the <code>floodfill</code> OpenCV method, which consists of painting an area that has the same color, replacing it by another color (label). Here this technique is used for labeling and counting white bubbles in a black background,identifing and counting as well, bubbles with holes.</p>
-<p>This example was based in the <a href="https://agostinhobritojr.github.io/tutorial/pdi/exemplos/labeling.cpp">labeling.cpp</a> algorithm and answers to the proposed exercises at <a href="https://agostinhobritojr.github.io/tutorial/pdi/#_descri%C3%A7%C3%A3o_do_programa_labeling_cpp">agostinhobritojr.github.io</a>.</p>
+<p>This example was based on the <a href="https://agostinhobritojr.github.io/tutorial/pdi/exemplos/labeling.cpp">labeling.cpp</a> algorithm and answers to the proposed exercises at <a href="https://agostinhobritojr.github.io/tutorial/pdi/#_descri%C3%A7%C3%A3o_do_programa_labeling_cpp">agostinhobritojr.github.io</a>.</p>
 <p>The labeling.cpp algorithm works very well in cases where the amount of objects are below 255 units. But, if we have more than 255 objects to label, varying from the pixel grayscale intesity, we'll find an issue. For theses cases, another approach could be used, for instance, a diferent number representation as such as floating point can be used, so a much greater amount of objects could be labeled.</p>
 <p><img src="../img/bolhas.png" alt="labeling" title="Labeling" />
 <img src="../img/labeling_part1.png" alt="labeling" title="Labeling" />
@@ -340,7 +340,7 @@ int main(){
 Histogram equalization is a method that improves the contrast in an image, in order to stretch out the intensity range. In this example, in equalize.cpp this outcome has been achived by using OpenCV function:equalize_hist:equalizeHist &lt;&gt;.</p>
 <p><img src="../img/camera__.jpg" alt="original" title="Original" />
 <img src="../img/equalized_image.jpg" alt="equalized" title="Equalized" /></p>
-<p>This example was based in the <a href="https://agostinhobritojr.github.io/tutorial/pdi/exemplos/histogram.cpp">histogram.cpp</a> algorithm and answers to the proposed exercises at <a href="https://agostinhobritojr.github.io/tutorial/pdi/#_exerc%C3%ADcios_3">agostinhobritojr.github.io</a>.</p>
+<p>This example was based on the <a href="https://agostinhobritojr.github.io/tutorial/pdi/exemplos/histogram.cpp">histogram.cpp</a> algorithm and answers to the proposed exercises at <a href="https://agostinhobritojr.github.io/tutorial/pdi/#_exerc%C3%ADcios_3">agostinhobritojr.github.io</a>.</p>
 <pre><code class="language-cpp">#include &lt;iostream&gt;
 #include &lt;opencv2/opencv.hpp&gt;
 
@@ -414,7 +414,7 @@ Display the source and equalized images in a window.
 <code>C++: void calcHist(const Mat* images, int nimages, const int* channels, InputArray mask, OutputArray hist, int dims, const int* histSize, const float** ranges, bool uniform=true, bool accumulate=false )</code>
 OpenCV implements the function compareHist to perform a comparison. It also offers 4 different metrics to compute the matching, in this program we used the correlation as an metric.
 <code>compareHist(histR, old_hist, CV_COMP_CORREL);</code></p>
-<p>This example was based in the <a href="https://agostinhobritojr.github.io/tutorial/pdi/exemplos/histogram.cpp">histogram.cpp</a> algorithm and answers to the proposed exercises at <a href="https://agostinhobritojr.github.io/tutorial/pdi/#_exerc%C3%ADcios_3">agostinhobritojr.github.io</a>.</p>
+<p>This example was based on the <a href="https://agostinhobritojr.github.io/tutorial/pdi/exemplos/histogram.cpp">histogram.cpp</a> algorithm and answers to the proposed exercises at <a href="https://agostinhobritojr.github.io/tutorial/pdi/#_exerc%C3%ADcios_3">agostinhobritojr.github.io</a>.</p>
 <pre><code class="language-cpp">#include &lt;iostream&gt;
 #include &lt;opencv2/opencv.hpp&gt;
 
@@ -506,7 +506,7 @@ int main(int argc, char** argv){
 }
 </code></pre>
 <a class="header" href="#exercise-6-laplacian-of-a-gaussian-filter" id="exercise-6-laplacian-of-a-gaussian-filter"><h1>Exercise 6. Laplacian of a Gaussian filter</h1></a>
-<p>This example was based in the <a href="https://agostinhobritojr.github.io/tutorial/pdi/exemplos/filtroespacial.cpp">filtroespacial.cpp</a> algorithm and answers to the proposed exercises at <a href="https://agostinhobritojr.github.io/tutorial/pdi/#_exerc%C3%ADcios_4">agostinhobritojr.github.io</a>.</p>
+<p>This example was based on the <a href="https://agostinhobritojr.github.io/tutorial/pdi/exemplos/filtroespacial.cpp">filtroespacial.cpp</a> algorithm and answers to the proposed exercises at <a href="https://agostinhobritojr.github.io/tutorial/pdi/#_exerc%C3%ADcios_4">agostinhobritojr.github.io</a>.</p>
 <p>This program adds one more function to the provided example. Through this new function, the laplacian of the gaussian of a captured image can be calculated by pressing the key &quot;z&quot; and the filtered image is displayed.</p>
 <p>Comparing both laplacian and laplacion of gauss filters results, it is possible to conclude that the second filter returns a better filtering, as we can observe more easily the borders and cornes of the image.</p>
 <pre><code class="language-cpp">#include &lt;iostream&gt;
@@ -643,7 +643,7 @@ int main(int argvc, char** argv){
 }
 </code></pre>
 <a class="header" href="#exercise-7-tilty-shift" id="exercise-7-tilty-shift"><h1>Exercise 7. Tilty Shift</h1></a>
-<p>This example was based in the <a href="https://agostinhobritojr.github.io/tutorial/pdi/exemplos/filtroespacial.cpp">addweighted.cpp</a> algorithm and answers to the proposed exercises at <a href="https://agostinhobritojr.github.io/tutorial/pdi/#_exerc%C3%ADcios_6">agostinhobritojr.github.io</a>.</p>
+<p>This example was based on the <a href="https://agostinhobritojr.github.io/tutorial/pdi/exemplos/filtroespacial.cpp">addweighted.cpp</a> algorithm and answers to the proposed exercises at <a href="https://agostinhobritojr.github.io/tutorial/pdi/#_exerc%C3%ADcios_6">agostinhobritojr.github.io</a>.</p>
 <p>This program adds three more functions to the provided example. Through these functions, the tiltyshift.cpp program makes the following adjustments:</p>
 <ol>
 <li>Adjust the height of the focus centre of the image</li>
@@ -665,7 +665,7 @@ int center_slider_max=100;
 
 int alfa_slider = 0;
 int alfa_slider_max = 100;
-// ALTURA
+// height
 int top_slider = 0;
 int top_slider_max = 100;
 Mat image1, image2, blended;
@@ -682,25 +682,23 @@ void on_trackbar_blend(int, void*){
 void on_trackbar_line(int, void*){
   image2.copyTo(imageTop);
 
-  Size tamanho = image2.size();
-
-  int largura = tamanho.width;
-  int altura = tamanho.height;
-  int limit = top_slider*altura/100;
-  int base = center_slider*altura/100;
+  int width = image2.size().width;
+  int height = image2.size().height;
+  int limit = top_slider*height/100;
+  int base = center_slider*height/100;
 
 
   if(limit &gt; 0){
 
 
-    if(base &gt;= 0 &amp;&amp; base &lt;= altura-limit){
-      Mat tmp = image1(Rect(0, base, largura,limit));
-      tmp.copyTo(imageTop(Rect(0, base, largura,limit)));
+    if(base &gt;= 0 &amp;&amp; base &lt;= height-limit){
+      Mat tmp = image1(Rect(0, base, width,limit));
+      tmp.copyTo(imageTop(Rect(0, base, width,limit)));
     }
 
     else{
-      Mat tmp = image1(Rect(0, 0, largura,limit));
-      tmp.copyTo(imageTop(Rect(0, 0, largura,limit)));
+      Mat tmp = image1(Rect(0, 0, width,limit));
+      tmp.copyTo(imageTop(Rect(0, 0, width,limit)));
     }
   }
 
@@ -760,6 +758,321 @@ int main(int argvc, char** argv){
 <img src="../img/original.jpg" alt="Original image" title="Original" /></p>
 <p>Filtered image
 <img src="../img/tiltyshift.jpg" alt="Filtered image" title="Filtered" /></p>
+<a class="header" href="#unit-2" id="unit-2"><h1>Unit 2</h1></a>
+<p>In this unit, the following examples were developed:</p>
+<ul>
+<li>Homomorphic filtering</li>
+<li>Pointillism art</li>
+<li>The K-means process</li>
+</ul>
+<a class="header" href="#exercise-1-homomorphic-filter" id="exercise-1-homomorphic-filter"><h1>Exercise 1. Homomorphic filter</h1></a>
+<p>This example implements an homomorphic filter based on the <a href="https://agostinhobritojr.github.io/tutorial/pdi/exemplos/dft.cpp">dft.cpp</a> algorithm and answers to the proposed exercises at <a href="https://agostinhobritojr.github.io/tutorial/pdi/#_exerc%C3%ADcios_6">agostinhobritojr.github.io</a>.</p>
+<p>The Homomorphic filter is based on the following function:</p>
+<p><img src="../img/equation_homomorphic.png" alt="Equation" title="Equation" /></p>
+<a class="header" href="#what-does-this-program-do-2" id="what-does-this-program-do-2"><h2>What does this program do?</h2></a>
+<a class="header" href="#the-program-allows-4-different-adjustments-in-the-image" id="the-program-allows-4-different-adjustments-in-the-image"><h4>The program allows 4 different adjustments in the image</h4></a>
+<ol>
+<li>Regulate the low frequency component γLγL (referring to illumination);</li>
+<li>Regulate the high frequency component γHγH (referring to reflectance);</li>
+<li>Regulate the variable C, which controls the slope of the function as it transitions between γLγL and γHγH.</li>
+<li>Adjust the variable D0D0;</li>
+</ol>
+<p>Original image
+<img src="../img/original_homomorphic.png" alt="Original image" title="Original" /></p>
+<p>Filtered image
+<img src="../img/filtered_homomorphic.png" alt="Filtered image" title="Filtered" /></p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;opencv2/opencv.hpp&gt;
+#include &lt;cmath&gt;
+
+using namespace cv;
+using namespace std;
+
+Mat image, imageDft, padded;
+char *filename;
+float MAX = 100.0;
+//-----------------VARIAVEIS DO FILTRO---------------------
+float yl = 0, yh = 0, d0 = 0, c = 0;
+float ylmax = 100, yhmax = 100, d0max = 256, cmax = 100;
+int yl_slider = 0, yh_slider = 0, d0_slider = 0, c_slider = 0;
+//---------------------------------------------------------
+
+//valores ideais dos tamanhos da imagem para calculo da DFT
+int dft_M, dft_N;
+//---------------------------------------------------------
+
+char TrackbarName[50];
+
+void deslocaDFT(Mat&amp; image ){
+    Mat tmp, A, B, C, D;
+
+    // se a imagem tiver tamanho impar, recorta a regiao para
+    // evitar cÃģpias de tamanho desigual
+    image = image(Rect(0, 0, image.cols &amp; -2, image.rows &amp; -2));
+    int cx = image.cols/2;
+    int cy = image.rows/2;
+
+    // reorganize quadrants
+    // A B   -&gt;  D C
+    // C D       B A
+    A = image(Rect(0, 0, cx, cy));
+    B = image(Rect(cx, 0, cx, cy));
+    C = image(Rect(0, cy, cx, cy));
+    D = image(Rect(cx, cy, cx, cy));
+
+    // A &lt;-&gt; D
+    A.copyTo(tmp);  D.copyTo(A);  tmp.copyTo(D);
+
+    // C &lt;-&gt; B
+    C.copyTo(tmp);  B.copyTo(C);  tmp.copyTo(B);
+}
+
+void filtroHM(){
+  Mat filter = Mat(padded.size(), CV_32FC2, Scalar(0));
+  Mat tmp = Mat(dft_M, dft_N, CV_32F);
+
+  for (int i = 0; i &lt; dft_M; i++) {
+      for (int j = 0; j &lt; dft_N; j++) {
+          float d2 = pow(i - dft_M/2.0, 2) + pow(j - dft_N/2.0, 2);
+          float exp = - c*(d2/pow(d0, 2));
+          float filtroH = (yh - yl)*(1 - expf(exp) ) + yl;
+          tmp.at&lt;float&gt; (i,j) = filtroH;
+      }
+  }
+
+  Mat comps[] = {tmp, tmp};
+  merge(comps, 2, filter);
+
+  Mat dftClone = imageDft.clone();
+
+  mulSpectrums(dftClone,filter,dftClone,0);
+
+  deslocaDFT(dftClone);
+
+  idft(dftClone, dftClone);
+
+  vector&lt;Mat&gt; planos;
+
+  split (dftClone, planos);
+
+  normalize(planos[0], planos[0], 0, 1, CV_MINMAX);
+
+  imshow(&quot;Filtro Homomorfico&quot;, planos[0]);
+  imshow(&quot;Original&quot;, image);
+
+}
+
+void on_trackbar_yl(int, void*){
+    yl = (float) yl_slider;
+    yl = ylmax*yl/MAX;
+    filtroHM();
+}
+
+void on_trackbar_d0(int, void*){
+    d0 = d0_slider*d0max/MAX;
+    filtroHM();
+}
+
+void on_trackbar_yh(int, void*) {
+    yh = yh_slider*yhmax/MAX;
+    filtroHM();
+}
+void on_trackbar_c(int, void*) {
+    c = c_slider*cmax / MAX;
+    filtroHM();
+}
+
+
+int main(int argvc , char** argv){
+  //open image
+      if (argvc != 2) {
+        cerr &lt;&lt; &quot;Usage: &quot; &lt;&lt; argv[0] &lt;&lt; &quot; &lt;img_path&gt;&quot; &lt;&lt; endl;
+        return 1;
+    }
+
+    filename = argv[1];
+    image = imread(filename);
+  cvtColor(image, image, CV_BGR2GRAY);
+  // Identify the optimum size for 
+  // Calculating FFT
+  dft_M = getOptimalDFTSize(image.rows);
+  dft_N = getOptimalDFTSize(image.cols);
+
+
+
+  // Image padding
+  Mat_&lt;float&gt; zeros;
+  copyMakeBorder(image, padded, 0,
+                 dft_M - image.rows, 0,
+                 dft_N - image.cols,
+                 BORDER_CONSTANT, Scalar::all(0));
+
+  // Zero padding - complex part of the matrix
+  zeros = Mat_&lt;float&gt;::zeros(padded.size());
+
+  // prepare the complex part 
+  imageDft = Mat(padded.size(), CV_32FC2, Scalar(0));
+
+  copyMakeBorder(image, padded, 0,
+                 dft_M - image.rows, 0,
+                 dft_N - image.cols,
+                 BORDER_CONSTANT, Scalar::all(0));
+
+  Mat_&lt;float&gt; realInput = Mat_&lt;float&gt;(padded);
+
+  // insere the two components within the matrices arrays
+  vector&lt;Mat&gt; planos;
+  planos.push_back(realInput);
+  planos.push_back(zeros);
+
+  // combine matrices array into a single
+  // complex component
+  merge(planos, imageDft);
+
+  // calcula o dft
+  dft(imageDft, imageDft);
+  deslocaDFT(imageDft);
+
+  namedWindow(&quot;Homomorfic filter&quot;, WINDOW_NORMAL);
+
+  sprintf( TrackbarName, &quot;Yh&quot;);
+  createTrackbar( TrackbarName, &quot;Filtro Homomorfico&quot;,
+                  &amp;yh_slider,
+                  MAX,
+                  on_trackbar_yh);
+
+  sprintf( TrackbarName, &quot;YL&quot;);
+  createTrackbar( TrackbarName, &quot;Filtro Homomorfico&quot;,
+                  &amp;yl_slider,
+                  MAX,
+                  on_trackbar_yl);
+
+  sprintf( TrackbarName, &quot;D0&quot;);
+  createTrackbar( TrackbarName, &quot;Filtro Homomorfico&quot;,
+                  &amp;d0_slider,
+                  MAX,
+                  on_trackbar_d0 );
+  sprintf(TrackbarName, &quot;C&quot;);
+  createTrackbar( TrackbarName, &quot;Filtro Homomorfico&quot;,
+                  &amp;c_slider,
+                  MAX,
+                  on_trackbar_c);
+  filtroHM();
+  waitKey(0);
+
+  return 0;
+}
+ 
+</code></pre>
+<p>git</p>
+<a class="header" href="#exercise-2---swapping-regions-1" id="exercise-2---swapping-regions-1"><h1>Exercise 2 - Swapping regions</h1></a>
+<p>In this example, we'll create an image by swapping regions from an original one. For this, Regions of Interest (ROI) were created using rectangles with half the height and width of the original image. In sequence, using the <code>Mat (const Mat &amp;m, const Rect &amp;roi)</code> constructor, 4 images were created by using those rectangles and finally the <code>CV::Mat::copyTo(OutPutArray m)</code> method was used to perfom the swap of the 1-3 and 2-4 regions.</p>
+<p><img src="../img/camera__.jpg" alt="Swapping Regions" title="Swapping regions" />
+<img src="../img/swapping.jpg" alt="Swapping Regions" title="Swapping regions" /></p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;opencv2/opencv.hpp&gt;
+
+using namespace cv;
+using namespace std;
+
+int main()
+{
+  Mat image = imread(&quot;img/camera__.jpg&quot;,CV_LOAD_IMAGE_GRAYSCALE);
+
+  if(!image.data)
+    cout &lt;&lt; &quot;nao abriu camera__.jpg&quot; &lt;&lt; endl;
+
+  namedWindow(&quot;janela&quot;,WINDOW_AUTOSIZE);
+
+  imshow(&quot;janela&quot;, image);      
+  waitKey();
+
+  int x = 0, y = 0, width = image.rows/2, height = image.cols/2;
+  Mat image2; 
+  image.copyTo(image2);
+
+ // creating Regions of Interest
+  Rect rois[4] = { 
+        Rect(     0,      0, width, height),
+        Rect(width,      0, width, height),
+        Rect(     0, height, width, height),
+        Rect(width, height, width, height)
+        };
+
+  // copying regions and swapping them   
+  Mat region1 (image, rois[3]);
+  region1.copyTo(image2(rois[0]));
+
+  Mat region2 (image, rois[2]);
+  region2.copyTo(image2(rois[1]));
+
+  Mat region3 (image, rois[1]);
+  region3.copyTo(image2(rois[2]));
+
+  Mat region4 (image, rois[0]);
+  region4.copyTo(image2(rois[3]));
+
+  imwrite(&quot;swapping.jpg&quot;, image2);
+  imshow(&quot;janela&quot;, image2);  
+  waitKey();
+
+  return 0;
+}   
+</code></pre>
+<a class="header" href="#exercise-2---swapping-regions-2" id="exercise-2---swapping-regions-2"><h1>Exercise 2 - Swapping regions</h1></a>
+<p>In this example, we'll create an image by swapping regions from an original one. For this, Regions of Interest (ROI) were created using rectangles with half the height and width of the original image. In sequence, using the <code>Mat (const Mat &amp;m, const Rect &amp;roi)</code> constructor, 4 images were created by using those rectangles and finally the <code>CV::Mat::copyTo(OutPutArray m)</code> method was used to perfom the swap of the 1-3 and 2-4 regions.</p>
+<p><img src="../img/camera__.jpg" alt="Swapping Regions" title="Swapping regions" />
+<img src="../img/swapping.jpg" alt="Swapping Regions" title="Swapping regions" /></p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;opencv2/opencv.hpp&gt;
+
+using namespace cv;
+using namespace std;
+
+int main()
+{
+  Mat image = imread(&quot;img/camera__.jpg&quot;,CV_LOAD_IMAGE_GRAYSCALE);
+
+  if(!image.data)
+    cout &lt;&lt; &quot;nao abriu camera__.jpg&quot; &lt;&lt; endl;
+
+  namedWindow(&quot;janela&quot;,WINDOW_AUTOSIZE);
+
+  imshow(&quot;janela&quot;, image);      
+  waitKey();
+
+  int x = 0, y = 0, width = image.rows/2, height = image.cols/2;
+  Mat image2; 
+  image.copyTo(image2);
+
+ // creating Regions of Interest
+  Rect rois[4] = { 
+        Rect(     0,      0, width, height),
+        Rect(width,      0, width, height),
+        Rect(     0, height, width, height),
+        Rect(width, height, width, height)
+        };
+
+  // copying regions and swapping them   
+  Mat region1 (image, rois[3]);
+  region1.copyTo(image2(rois[0]));
+
+  Mat region2 (image, rois[2]);
+  region2.copyTo(image2(rois[1]));
+
+  Mat region3 (image, rois[1]);
+  region3.copyTo(image2(rois[2]));
+
+  Mat region4 (image, rois[0]);
+  region4.copyTo(image2(rois[3]));
+
+  imwrite(&quot;swapping.jpg&quot;, image2);
+  imshow(&quot;janela&quot;, image2);  
+  waitKey();
+
+  return 0;
+}   
+</code></pre>
 
                     </main>
 

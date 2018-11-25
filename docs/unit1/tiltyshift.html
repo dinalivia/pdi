@@ -72,7 +72,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="../introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="../unit1/list.html"><strong aria-hidden="true">2.</strong> Unit 1</a></li><li><ol class="section"><li><a href="../unit1/negative.html"><strong aria-hidden="true">2.1.</strong> Negative of a region</a></li><li><a href="../unit1/swap_regions.html"><strong aria-hidden="true">2.2.</strong> Swapping regions</a></li><li><a href="../unit1/bolhas.html"><strong aria-hidden="true">2.3.</strong> Labeling objects - Bubbles with holes</a></li><li><a href="../unit1/equalization.html"><strong aria-hidden="true">2.4.</strong> Histogram equalization</a></li><li><a href="../unit1/motiondetector.html"><strong aria-hidden="true">2.5.</strong> Motion Detector</a></li><li><a href="../unit1/lapl_gauss.html"><strong aria-hidden="true">2.6.</strong> Laplacian of a Gaussian filter</a></li><li><a href="../unit1/tiltyshift.html" class="active"><strong aria-hidden="true">2.7.</strong> Tilty Shift</a></li></ol></li></ol>
+            <ol class="chapter"><li><a href="../introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="../unit1/list.html"><strong aria-hidden="true">2.</strong> Unit 1</a></li><li><ol class="section"><li><a href="../unit1/negative.html"><strong aria-hidden="true">2.1.</strong> Negative of a region</a></li><li><a href="../unit1/swap_regions.html"><strong aria-hidden="true">2.2.</strong> Swapping regions</a></li><li><a href="../unit1/bolhas.html"><strong aria-hidden="true">2.3.</strong> Labeling objects - Bubbles with holes</a></li><li><a href="../unit1/equalization.html"><strong aria-hidden="true">2.4.</strong> Histogram equalization</a></li><li><a href="../unit1/motiondetector.html"><strong aria-hidden="true">2.5.</strong> Motion Detector</a></li><li><a href="../unit1/lapl_gauss.html"><strong aria-hidden="true">2.6.</strong> Laplacian of a Gaussian filter</a></li><li><a href="../unit1/tiltyshift.html" class="active"><strong aria-hidden="true">2.7.</strong> Tilty Shift</a></li></ol></li><li><a href="../unit2/list.html"><strong aria-hidden="true">3.</strong> Unit 2</a></li><li><ol class="section"><li><a href="../unit2/homomorphic.html"><strong aria-hidden="true">3.1.</strong> Homomorphic Filter</a></li><li><a href="../unit1/swap_regions.html"><strong aria-hidden="true">3.2.</strong> Pointillism art</a></li><li><a href="../unit1/swap_regions.html"><strong aria-hidden="true">3.3.</strong> The K-means process</a></li></ol></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -137,7 +137,7 @@
                 <div id="content" class="content">
                     <main>
                         <a class="header" href="#exercise-7-tilty-shift" id="exercise-7-tilty-shift"><h1>Exercise 7. Tilty Shift</h1></a>
-<p>This example was based in the <a href="https://agostinhobritojr.github.io/tutorial/pdi/exemplos/filtroespacial.cpp">addweighted.cpp</a> algorithm and answers to the proposed exercises at <a href="https://agostinhobritojr.github.io/tutorial/pdi/#_exerc%C3%ADcios_6">agostinhobritojr.github.io</a>.</p>
+<p>This example was based on the <a href="https://agostinhobritojr.github.io/tutorial/pdi/exemplos/filtroespacial.cpp">addweighted.cpp</a> algorithm and answers to the proposed exercises at <a href="https://agostinhobritojr.github.io/tutorial/pdi/#_exerc%C3%ADcios_6">agostinhobritojr.github.io</a>.</p>
 <p>This program adds three more functions to the provided example. Through these functions, the tiltyshift.cpp program makes the following adjustments:</p>
 <ol>
 <li>Adjust the height of the focus centre of the image</li>
@@ -159,7 +159,7 @@ int center_slider_max=100;
 
 int alfa_slider = 0;
 int alfa_slider_max = 100;
-// ALTURA
+// height
 int top_slider = 0;
 int top_slider_max = 100;
 Mat image1, image2, blended;
@@ -176,25 +176,23 @@ void on_trackbar_blend(int, void*){
 void on_trackbar_line(int, void*){
   image2.copyTo(imageTop);
 
-  Size tamanho = image2.size();
-
-  int largura = tamanho.width;
-  int altura = tamanho.height;
-  int limit = top_slider*altura/100;
-  int base = center_slider*altura/100;
+  int width = image2.size().width;
+  int height = image2.size().height;
+  int limit = top_slider*height/100;
+  int base = center_slider*height/100;
 
 
   if(limit &gt; 0){
 
 
-    if(base &gt;= 0 &amp;&amp; base &lt;= altura-limit){
-      Mat tmp = image1(Rect(0, base, largura,limit));
-      tmp.copyTo(imageTop(Rect(0, base, largura,limit)));
+    if(base &gt;= 0 &amp;&amp; base &lt;= height-limit){
+      Mat tmp = image1(Rect(0, base, width,limit));
+      tmp.copyTo(imageTop(Rect(0, base, width,limit)));
     }
 
     else{
-      Mat tmp = image1(Rect(0, 0, largura,limit));
-      tmp.copyTo(imageTop(Rect(0, 0, largura,limit)));
+      Mat tmp = image1(Rect(0, 0, width,limit));
+      tmp.copyTo(imageTop(Rect(0, 0, width,limit)));
     }
   }
 
@@ -266,6 +264,10 @@ int main(int argvc, char** argv){
                         
 
                         
+                            <a rel="next" href="../unit2/list.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -279,6 +281,10 @@ int main(int argvc, char** argv){
                     </a>
                 
 
+                
+                    <a href="../unit2/list.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
                 
             </nav>
 
