@@ -12,7 +12,7 @@
 - [Unit 2](./unit2/list.md)
     - [1. Homomorphic Filter](./unit2/homomorphic.md)
     - [2. Pointillism art](./unit2/pointillism.md)
-    - [3. The K-means process](./unit2/k-means.md)
+    - [3. The K-means process](./unit2/kmeans.md)
 
 
 
