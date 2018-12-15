@@ -136,7 +136,73 @@
 
                 <div id="content" class="content">
                     <main>
-                        
+                        <a class="header" href="#exercise-3-k-means-proccess" id="exercise-3-k-means-proccess"><h1>Exercise 3. K-means proccess</h1></a>
+<p>This example was based on the <a href="https://agostinhobritojr.github.io/tutorial/pdi/exemplos/kmeans.cpp">kmeans.cpp</a> algorithm and answers to the proposed exercises at [agostinhobritojr.github.io]https://agostinhobritojr.github.io/tutorial/pdi/#_exerc%C3%ADcios_8).</p>
+<p>The following steps were used to accomplish this effect:</p>
+<a class="header" href="#what-does-this-program-do" id="what-does-this-program-do"><h2>What does this program do?</h2></a>
+<a class="header" href="#the-k-means-algorithm-works-according-to-the-following-steps" id="the-k-means-algorithm-works-according-to-the-following-steps"><h4>The k-means algorithm works according to the following steps:</h4></a>
+<ol>
+<li>Choose k as the number of classes for the vectors xi of N samples, i = 1,2, ⋯, N.</li>
+<li>Choose m1, m2, ⋯, mk as initial approximations for the class centers.</li>
+<li>Sort each sample xi using, for example, a minimum distance classifier (Euclidean distance).</li>
+<li>Recalculate the averages mj using the result of the previous step.</li>
+<li>If the new averages are consistent (do not change considerably), finalize the algorithm. If not, recalculate the centers and redo the classification.</li>
+</ol>
+<pre><code class="language-cpp">#include &lt;opencv2/opencv.hpp&gt;
+#include &lt;cstdlib&gt;
+#include &lt;ctime&gt;
+
+using namespace cv;
+
+int main( int argc, char** argv ){
+  for(int i = 0; i &lt; 10; i++){
+
+    int nClusters = 20;
+    Mat labels;
+    int nRounds = 1;
+    Mat centers;
+    char name[30];
+
+    if(argc!=3){
+    exit(0);
+    }
+
+    Mat img = imread( argv[1], CV_LOAD_IMAGE_COLOR);
+    Mat samples(img.rows * img.cols, 3, CV_32F);
+
+    for( int y = 0; y &lt; img.rows; y++ ){
+      for( int x = 0; x &lt; img.cols; x++ ){
+        for( int z = 0; z &lt; 3; z++){
+          samples.at&lt;float&gt;(y + x*img.rows, z) = img.at&lt;Vec3b&gt;(y,x)[z];
+      }
+    }
+    }
+
+    kmeans(samples,
+       nClusters,
+       labels,
+       TermCriteria(CV_TERMCRIT_ITER|CV_TERMCRIT_EPS, 10000, 0.0001),
+       nRounds,
+       KMEANS_RANDOM_CENTERS,
+       centers );
+
+
+    Mat labeled( img.size(), img.type() );
+    for( int y = 0; y &lt; img.rows; y++ ){
+      for( int x = 0; x &lt; img.cols; x++ ){
+      int indice = labels.at&lt;int&gt;(y + x*img.rows,0);
+      labeled.at&lt;Vec3b&gt;(y,x)[0] = (uchar) centers.at&lt;float&gt;(indice, 0);
+      labeled.at&lt;Vec3b&gt;(y,x)[1] = (uchar) centers.at&lt;float&gt;(indice, 1);
+      labeled.at&lt;Vec3b&gt;(y,x)[2] = (uchar) centers.at&lt;float&gt;(indice, 2);
+    }
+    }
+    sprintf(name,  &quot;test%d.jpg&quot;, i);
+    imwrite(name, labeled);
+    //waitKey( 0 );
+  }
+}
+</code></pre>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
