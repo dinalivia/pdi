@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>5. Motion Detector - Digital Image Processing - Dina Lívia</title>
+        <title>2. Pointillism art - Digital Image Processing - Dina Lívia</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,7 +72,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="../introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="../unit1/list.html"><strong aria-hidden="true">2.</strong> Unit 1</a></li><li><ol class="section"><li><a href="../unit1/negative.html"><strong aria-hidden="true">2.1.</strong> Negative of a region</a></li><li><a href="../unit1/swap_regions.html"><strong aria-hidden="true">2.2.</strong> Swapping regions</a></li><li><a href="../unit1/bolhas.html"><strong aria-hidden="true">2.3.</strong> Labeling objects - Bubbles with holes</a></li><li><a href="../unit1/equalization.html"><strong aria-hidden="true">2.4.</strong> Histogram equalization</a></li><li><a href="../unit1/motiondetector.html" class="active"><strong aria-hidden="true">2.5.</strong> Motion Detector</a></li><li><a href="../unit1/lapl_gauss.html"><strong aria-hidden="true">2.6.</strong> Laplacian of a Gaussian filter</a></li><li><a href="../unit1/tiltyshift.html"><strong aria-hidden="true">2.7.</strong> Tilty Shift</a></li></ol></li><li><a href="../unit2/list.html"><strong aria-hidden="true">3.</strong> Unit 2</a></li><li><ol class="section"><li><a href="../unit2/homomorphic.html"><strong aria-hidden="true">3.1.</strong> Homomorphic Filter</a></li><li><a href="../unit2/pointillism.html"><strong aria-hidden="true">3.2.</strong> Pointillism art</a></li><li><a href="../unit2/k-means.html"><strong aria-hidden="true">3.3.</strong> The K-means process</a></li></ol></li></ol>
+            <ol class="chapter"><li><a href="../introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="../unit1/list.html"><strong aria-hidden="true">2.</strong> Unit 1</a></li><li><ol class="section"><li><a href="../unit1/negative.html"><strong aria-hidden="true">2.1.</strong> Negative of a region</a></li><li><a href="../unit1/swap_regions.html"><strong aria-hidden="true">2.2.</strong> Swapping regions</a></li><li><a href="../unit1/bolhas.html"><strong aria-hidden="true">2.3.</strong> Labeling objects - Bubbles with holes</a></li><li><a href="../unit1/equalization.html"><strong aria-hidden="true">2.4.</strong> Histogram equalization</a></li><li><a href="../unit1/motiondetector.html"><strong aria-hidden="true">2.5.</strong> Motion Detector</a></li><li><a href="../unit1/lapl_gauss.html"><strong aria-hidden="true">2.6.</strong> Laplacian of a Gaussian filter</a></li><li><a href="../unit1/tiltyshift.html"><strong aria-hidden="true">2.7.</strong> Tilty Shift</a></li></ol></li><li><a href="../unit2/list.html"><strong aria-hidden="true">3.</strong> Unit 2</a></li><li><ol class="section"><li><a href="../unit2/homomorphic.html"><strong aria-hidden="true">3.1.</strong> Homomorphic Filter</a></li><li><a href="../unit2/pointillism.html" class="active"><strong aria-hidden="true">3.2.</strong> Pointillism art</a></li><li><a href="../unit2/k-means.html"><strong aria-hidden="true">3.3.</strong> The K-means process</a></li></ol></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -136,109 +136,133 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#exercise-5-motion-detection" id="exercise-5-motion-detection"><h1>Exercise 5. Motion Detection</h1></a>
-<p>Analizing an image histogram, it is possible to observe several aspects of an image or a video, such as motion detection. In this example, we use the correlation between two frames of an video to determine if there was motion or not in it.</p>
-<p>To achive this goal, the OpenCV <code>CalcHist</code> function was used to get the histogram of the frame, and the comparison between two frames was perfomed by the <code>compareHist</code> function, through the correlation comparison.;</p>
-<a class="header" href="#what-does-this-program-do" id="what-does-this-program-do"><h3>What does this program do?</h3></a>
-<pre><code>Create a VideoCapture object
-Capture frame-by-frame
-Calculate histogram by using the OpenCV function 
-Display the source and equalized images in a window.
-</code></pre>
-<p>Calculates a histogram of a set of arrays:
-<code>C++: void calcHist(const Mat* images, int nimages, const int* channels, InputArray mask, OutputArray hist, int dims, const int* histSize, const float** ranges, bool uniform=true, bool accumulate=false )</code>
-OpenCV implements the function compareHist to perform a comparison. It also offers 4 different metrics to compute the matching, in this program we used the correlation as an metric.
-<code>compareHist(histR, old_hist, CV_COMP_CORREL);</code></p>
-<p>This example was based on the <a href="https://agostinhobritojr.github.io/tutorial/pdi/exemplos/histogram.cpp">histogram.cpp</a> algorithm and answers to the proposed exercises at <a href="https://agostinhobritojr.github.io/tutorial/pdi/#_exerc%C3%ADcios_3">agostinhobritojr.github.io</a>.</p>
+                        <a class="header" href="#exercise-2-pointillism-art" id="exercise-2-pointillism-art"><h1>Exercise 2. Pointillism art</h1></a>
+<p>This section uses Canny Edge Detection, developed by John F. Canny in 1986, to create pointillism arts.
+To achieve this goal, we can simulate a painting by drawing circles that work out as a pointillism art. The example below perform the desired effect of pointillism through image processing.</p>
+<p>The following steps were used to accomplish this effect:</p>
+<a class="header" href="#what-does-this-program-do" id="what-does-this-program-do"><h2>What does this program do?</h2></a>
+<a class="header" href="#the-program-allows-4-different-adjustments-in-the-image" id="the-program-allows-4-different-adjustments-in-the-image"><h4>The program allows 4 different adjustments in the image</h4></a>
+<ol>
+<li>Apply canny algorithm on an image.</li>
+<li>Use the edges identified by the canny algorithm to draw smaller circles on them;</li>
+<li>Uses the Canny threshold to increase the quality of the painting affect.</li>
+</ol>
+<p>This example was based on the <a href="https://agostinhobritojr.github.io/tutorial/pdi/exemplos/pontilhismo.cpp">pointilhismo.cpp</a> and <a href="https://agostinhobritojr.github.io/tutorial/pdi/exemplos/canny.cpp">canny.cpp</a> algorithms and it answers to the proposed exercises at [agostinhobritojr.github.io]https://agostinhobritojr.github.io/tutorial/pdi/#_exerc%C3%ADcios_7).</p>
+<p>Original image
+<img src="../img/sydney-pointillism2.jpg" alt="Original image" title="Original" /></p>
+<p>Canny edge detector
+<img src="../img/sydney-canny.png" alt="Canny-edge detector" title="Canny edge detector" /></p>
+<p>Filtered image
+<img src="../img/sydney-point.png" alt="Filtered image" title="Filtered" /></p>
 <pre><code class="language-cpp">#include &lt;iostream&gt;
-#include &lt;opencv2/opencv.hpp&gt;
+#include &quot;opencv2/opencv.hpp&quot;
+#include &lt;fstream&gt;
+#include &lt;iomanip&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+#include &lt;numeric&gt;
+#include &lt;ctime&gt;
+#include &lt;cstdlib&gt;
 
-using namespace cv;
 using namespace std;
+using namespace cv;
 
-int main(int argc, char** argv){
-  Mat image;
+
+#define STEP 4
+#define JITTER 2
+#define RAIO 5
+
+int top_slider = 10;
+int top_slider_max = 200;
+
+char TrackbarName[50];
+
+Mat image,imgray, border,points;
   int width, height;
-  VideoCapture cap;
-  vector&lt;Mat&gt; planes;
-  Mat histR, motion, old_hist;
-  int nbins = 64;
-  float range[] = {0, 256};
-  const float *histrange = { range };
-  bool uniform = true;
-  bool acummulate = false;
+  Vec3b colors;
+  int x, y;
+  vector&lt;int&gt; yrange;
+  vector&lt;int&gt; xrange;
 
-  // Start Camera
-  cap.open(0);
-  
-  if(!cap.isOpened()){
-    cout &lt;&lt; &quot;cameras indisponiveis&quot;;
-    return -1;
-  }
-  
-  // image size
-  width  = cap.get(CV_CAP_PROP_FRAME_WIDTH);
-  height = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
+void on_trackbar_canny(int, void*){
 
-  cout &lt;&lt; &quot;largura = &quot; &lt;&lt; width &lt;&lt; endl;
-  cout &lt;&lt; &quot;altura  = &quot; &lt;&lt; height &lt;&lt; endl;
+  Canny(imgray, border, top_slider, 3*top_slider);
+  imshow(&quot;cannyborders.png&quot;, border);
+  points = Mat(height, width, CV_8UC3, Scalar(255,255,255));
+  std::random_shuffle(xrange.begin(), xrange.end());
+  for(auto i : xrange){
+    random_shuffle(yrange.begin(), yrange.end());
+    for(auto j : yrange){
 
-  // mat for histogram - analyzing only red here.
-  int histw = nbins, histh = nbins/2;
-  Mat histImgR(histh, histw, CV_8UC3, Scalar(0,0,0));
-
-  // Motion alert
-  motion = imread(&quot;img/motion_detected.png&quot;,CV_LOAD_IMAGE_COLOR);
-  if(!motion.data)
-    cout &lt;&lt; &quot;couldn't load image&quot; &lt;&lt; endl;
-
-  namedWindow(&quot;window&quot;,WINDOW_AUTOSIZE);
-
-  // faz uma vez para poder, calcular a primeira correlação, dar continuidade dentro do loop
-  cap &gt;&gt; image;
-  split (image, planes);
-  calcHist(&amp;planes[0], 1, 0, Mat(), histR, 1,
-             &amp;nbins, &amp;histrange,
-             uniform, acummulate);
-  normalize(histR, histR, 0, histImgR.rows, NORM_MINMAX, -1, Mat());
-  
-  histR.copyTo(old_hist);
-
-  while(1){
-    histR.copyTo(old_hist);
-    cap &gt;&gt; image;
-    split (image, planes);
-    calcHist(&amp;planes[0], 1, 0, Mat(), histR, 1,
-             &amp;nbins, &amp;histrange,
-             uniform, acummulate);
-
-    normalize(histR, histR, 0, histImgR.rows, NORM_MINMAX, -1, Mat());
-
-    histImgR.setTo(Scalar(0));
-    
-    double compare = compareHist(histR, old_hist, CV_COMP_CORREL);
-    cout &lt;&lt; compare &lt;&lt; endl;
-
-    if ( compare &lt; 0.01)
-    {
-      cout &lt;&lt; &quot;Motion detected\n&quot;;
-      motion.copyTo(image(Rect(0, histh, motion.size().width, motion.size().height)));
+      if(border.at&lt;uchar&gt;(j,i) == 255)
+      {
+          x = i+rand()%(2*JITTER)-JITTER+1;
+          y = j+rand()%(2*JITTER)-JITTER+1;
+          colors = image.at&lt;Vec3b&gt;(y,x);
+          circle(points, Point(x,y),2, CV_RGB(colors[2],colors[1],colors[0]), -1, CV_AA);
+      }
+      else{
+          x = i+rand()%(2*JITTER)-JITTER+1;
+          y = j+rand()%(2*JITTER)-JITTER+1;
+          colors = image.at&lt;Vec3b&gt;(x,y);
+          circle(points,
+                 cv::Point(y,x),
+                 RAIO,
+                 CV_RGB(colors[2],colors[1],colors[0]),
+                 -1,
+                 CV_AA);
+      }
     }
-
-    for(int i=0; i&lt;nbins; i++){
-      line(histImgR,
-           Point(i, histh),
-           Point(i, histh-cvRound(histR.at&lt;float&gt;(i))),
-           Scalar(0, 0, 255), 1, 8, 0);
-    }
-    histImgR.copyTo(image(Rect(0, 0       ,nbins, histh)));
-    imshow(&quot;image&quot;, image);
-    if(waitKey(30) &gt;= 0) break;
-    old_hist.copyTo(histR);
-
   }
+  imshow(&quot;canny&quot;,points);
+
+}
+
+int main(int argc, char**argv){
+
+  image= imread(argv[1],CV_LOAD_IMAGE_COLOR);
+  cvtColor(image,imgray, CV_BGR2GRAY);
+
+  srand(time(0));
+
+  if(!image.data){
+  cout &lt;&lt; &quot;nao abriu&quot; &lt;&lt; argv[1] &lt;&lt; endl;
+    cout &lt;&lt; argv[0] &lt;&lt; &quot; imagem.jpg&quot;;
+    exit(0);
+  }
+
+  width=image.size().width;
+  height=image.size().height;
+
+  xrange.resize(height/STEP);
+  yrange.resize(width/STEP);
+
+  iota(xrange.begin(), xrange.end(), 0);
+  iota(yrange.begin(), yrange.end(), 0);
+
+  for(uint i=0; i&lt;xrange.size(); i++){
+    xrange[i]= xrange[i]*STEP+STEP/2;
+  }
+
+  for(uint i=0; i&lt;yrange.size(); i++){
+    yrange[i]= yrange[i]*STEP+STEP/2;
+  }
+
+  sprintf( TrackbarName, &quot;Threshold_inferior&quot;, top_slider_max );
+
+  namedWindow(&quot;canny&quot;,1);
+  createTrackbar( TrackbarName, &quot;canny&quot;,
+                &amp;top_slider,
+                top_slider_max,
+                on_trackbar_canny );
+
+  on_trackbar_canny(top_slider, 0 );
+
+  waitKey();
+  imwrite(&quot;cannypontos.png&quot;,points);
   return 0;
 }
+
 </code></pre>
 
                     </main>
@@ -246,13 +270,13 @@ int main(int argc, char** argv){
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="../unit1/equalization.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../unit2/homomorphic.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="../unit1/lapl_gauss.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../unit2/k-means.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -264,13 +288,13 @@ int main(int argc, char** argv){
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="../unit1/equalization.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a href="../unit2/homomorphic.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a href="../unit1/lapl_gauss.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="../unit2/k-means.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

@@ -32,6 +32,7 @@ set(PDI_EXAMPLES_SOURCES
     canny.cpp
     pointillism-sample.cpp
     pointillism.cpp
+    k-means.cpp
     autocorrection.cpp
     gabarito.cpp
 
