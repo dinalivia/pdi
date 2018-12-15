@@ -29,8 +29,12 @@ set(PDI_EXAMPLES_SOURCES
     tiltyshiftvideo.cpp
     dft.cpp
     homomorphic.cpp
+    canny.cpp
+    pointillism-sample.cpp
+    pointillism.cpp
     autocorrection.cpp
     gabarito.cpp
+
 
 )
 
