@@ -13,15 +13,6 @@ The following steps were used to accomplish this effect:
 4. Recalculate the averages mj using the result of the previous step.
 5. If the new averages are consistent (do not change considerably), finalize the algorithm. If not, recalculate the centers and redo the classification.
 
-Original image
-![Original image](../img/sydney-pointillism2.jpg "Original")
-
-Canny edge detector
-![Canny-edge detector](../img/sydney-canny.png "Canny edge detector")
-
-Filtered image
-![Filtered image](../img/sydney-point.png "Filtered")
-
 ```cpp
 {{ #include ../../../k-means.cpp }}
 ```
