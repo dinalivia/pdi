@@ -14,6 +14,16 @@ using namespace cv;
 #define JITTER 2
 #define RAIO 3
 
+int top_slider = 10;
+int top_slider_max = 200;
+
+Mat image, border, frame, points, tmp, result;
+
+void canny1(int, void *){
+  Canny(image, border, top_slider, 3 * top_slider);
+  imshow("canny", border);
+}
+
 int main(int argc, char** argv){
   vector<int> yrange;
   vector<int> xrange;
