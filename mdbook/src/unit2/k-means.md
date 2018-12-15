@@ -1,4 +1,4 @@
-# Exercise 2. K-means proccess
+# Exercise 3. K-means proccess
 
 This example was based on the [kmeans.cpp](https://agostinhobritojr.github.io/tutorial/pdi/exemplos/kmeans.cpp) algorithm and answers to the proposed exercises at [agostinhobritojr.github.io]https://agostinhobritojr.github.io/tutorial/pdi/#_exerc%C3%ADcios_8).
 
